@@ -6,7 +6,13 @@ with open("invite.txt", 'r') as file:
     lines = file.readlines()
 
 alphabet = string.ascii_letters
+con = sqlite3.connect("form.sql")
+curser = con.cursor()
 for username in lines:
     username = username.strip()
-    random_string = "".join(random.choices(alphabet, k=8))
-    print(f"{username}: {random_string}")
+    password = "".join(random.choices(alphabet, k=8))
+    query = "INSERT INTO form (username, password) VALUES(?, ?);"
+    curser.execute(query, (username, password))
+
+con.commit()
+con.close()
