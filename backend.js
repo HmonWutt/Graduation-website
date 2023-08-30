@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('form.sql');
+var session = require('express-session');
+
 
 // TODO example can be viewed at https://github.com/expressjs/express/blob/master/examples/auth/index.js
 
@@ -19,8 +23,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/form', (req, res) => {
-    // TODO send all sql information
-    // figure out which user
+    // TODO test
+
+    const username = req.body.username;
+    const result = db.run("SELECT * FROM form WHERE username=?", username);
+    res.json({result});
+    res.status(200)
 })
 
 app.get('/login', function(req, res){
@@ -29,35 +37,59 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login', function (req, res, next) {
-    //TODO login 
+    //TODO test
+    if(req.session.user){
+        res.redirect('/');
+    }
 
     const username = req.body.username;
-    const password = req.body.password;
+    let result = db.run("SELECT FROM form WHERE username=?", username);
+    if(result === 0){
+        res.send("Error");
+    }
 
-    res.send('Got a POST request')
+    const password = req.body.password;
+    result = db.run("SELECT FROM form WHERE username=? AND password=?", [username, password]);
+    if(result === 0){
+        res.send("Error");
+    }
+    req.session.regenerate(function(){
+        req.session.user = user;
+    });
+    res.status(200);
 })
 
 app.put('/total', function (req, res) {
-    //TODO if logged in 
-    //set the size to the input give
-    //else restrict the url for only logged in
-    const total = req.body.oneplus;
+    //TODO test the code 
 
-    res.send('Updated');
+    if(req.session.user){
+        const total = req.body.oneplus;
+        db.run("UPDATE form SET plusone=? WHERE username=?", [total, req.body.user]);
+        res.status(201)
+    }else{
+        res.redirect('/login')
+    }
 })
 
 app.put('/information', function (req, res) {
-    // TODO add additional information to the backend allergy column
-    const total = req.body.information;
-
-    res.send('Updated');
+    // TODO test
+    if(req.session.user){
+        const information = req.body.information;
+        db.run("UPDATE form SET allergy=? WHERE username=?", [information, req.body.user]);
+        res.status(201)
+    }else{
+        res.redirect('/login')
+    }
 })
 
 app.put('/attending', function (req, res) {
-    // TODO 
-    const total = req.body.attending;
-
-    res.send('Updated');
+    // TODO test
+    if(req.session.user){
+        const attending = req.body.attending;
+        db.run("UPDATE form SET attending=? WHERE username=?", [attending, req.body.user]);
+    }else{
+        res.redirect('/login')
+    }
 })
 
 app.listen(port, () => {
