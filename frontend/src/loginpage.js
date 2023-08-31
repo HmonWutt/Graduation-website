@@ -24,6 +24,11 @@ const Loginpage = () => {
         console.log(response);
       });
   }
+  {
+    useEffect(() => {
+      axios.get("/testme").then((data) => console.log(data.result));
+    }, []);
+  }
   return (
     <section
       style={{
