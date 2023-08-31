@@ -8,6 +8,9 @@ const Loginpage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   console.log(username, password);
+  const fetchlala = () => {
+    axios.get("/lala").then((data) => console.log(data));
+  };
   const handleClickShowPassword = () => {
     setShowPassword(!setPassword);
   };
@@ -24,6 +27,11 @@ const Loginpage = () => {
         console.log(response);
       });
   }
+  {
+    useEffect(() => {
+      axios.get("/testme").then((data) => console.log(data.result));
+    }, []);
+  }
   return (
     <section
       style={{
@@ -33,7 +41,6 @@ const Loginpage = () => {
         gap: "2rem",
       }}
     >
-      Hello
       <input
         type="text"
         value={username}
@@ -45,6 +52,7 @@ const Loginpage = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={submit}>Submit</button>
+      <button onClick={fetchlala}>Submit</button>
     </section>
   );
 };
