@@ -24,11 +24,14 @@ app.get('/', (req, res) => {
 
 app.get('/form', (req, res) => {
     // TODO test
-
+    //
+    if(req.session.user){
+        res.redirect('/');
+    }
     const username = req.body.username;
-    const result = db.run("SELECT * FROM form WHERE username=?", username);
-    res.json({result});
-    res.status(200)
+    db.get("SELECT * FROM form WHERE username=?", username, (err, rows) => {
+        res.json({rows});
+    });
 })
 
 app.get('/testme', function(req, res){
@@ -74,8 +77,11 @@ app.put('/total', function (req, res) {
 
     if(req.session.user){
         const total = req.body.oneplus;
-        db.run("UPDATE form SET plusone=? WHERE username=?", [total, req.body.user]);
-        res.status(201)
+        const username = req.session.user;
+        db.run("UPDATE form SET plusone=? WHERE username=?", [total, username], (err, _) => {
+            if(!err) res.status(201);
+            else res.status(500);
+        });
     }else{
         res.redirect('/login')
     }
@@ -85,7 +91,11 @@ app.put('/information', function (req, res) {
     // TODO test
     if(req.session.user){
         const information = req.body.information;
-        db.run("UPDATE form SET allergy=? WHERE username=?", [information, req.body.user]);
+        const username = req.session.user;
+        db.run("UPDATE form SET allergy=? WHERE username=?", [information, username], (err, _) => {
+            if(!err) res.status(201);
+            else res.status(500);
+        });
         res.status(201)
     }else{
         res.redirect('/login')
@@ -96,7 +106,11 @@ app.put('/attending', function (req, res) {
     // TODO test
     if(req.session.user){
         const attending = req.body.attending;
-        db.run("UPDATE form SET attending=? WHERE username=?", [attending, req.body.user]);
+        const username = req.session.user;
+        db.run("UPDATE form SET attending=? WHERE username=?", [attending, username], (err, _) => {
+            if(!err) res.status(201);
+            else res.status(500);
+        });
     }else{
         res.redirect('/login')
     }
