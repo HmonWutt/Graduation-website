@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Logout from "./logout";
 
 import axios from "axios";
 
@@ -25,7 +26,8 @@ const Loginpage = () => {
       })
       .then(function (response) {
         console.log(response);
-      });
+      })
+      .catch((err) => console.log(err));
   }
   {
     useEffect(() => {
@@ -52,7 +54,8 @@ const Loginpage = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={submit}>Submit</button>
-      <button onClick={fetchlala}>Submit</button>
+      <button onClick={fetchlala}>Test</button>
+      <Logout />
     </section>
   );
 };
