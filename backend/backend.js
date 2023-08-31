@@ -31,7 +31,17 @@ app.get('/form', (req, res) => {
     res.status(200)
 })
 
+app.get('/testme', function(req, res){
+    const result = db.run("SELECT * FROM form WHERE username=?", username);
+    res.json({result});
+});
+
 app.get('/login', function(req, res){
+    //TODO
+    res.render('login');
+});
+
+app.get('/logout', function(req, res){
     //TODO
     res.render('login');
 });
