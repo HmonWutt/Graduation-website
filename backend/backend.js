@@ -4,20 +4,31 @@ const port = 3000;
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("form.sql");
 var session = require("express-session");
+
+app.use(
+  session({
+    resave: false, // don't save session if unmodified
+    saveUninitialized: true, // don't create session until something stored
+    //TODO secret
+    secret: "shhhh, very secret",
+  })
+);
+
+function isAuthenticated(req, res, next) {
+    console.log(req.session)
+  //console.log("authenticate");
+  //console.log("session ", req.session);
+
+  if (req.session.user) next();
+  else res.send("Not logged in");
+}
+
 app.use(express.urlencoded({ extended: true }));
 
 // TODO example can be viewed at https://github.com/expressjs/express/blob/master/examples/auth/index.js
 
 app.use(express.json());
-app.use(
-  session({
-    resave: false, // don't save session if unmodified
-    saveUninitialized: false, // don't create session until something stored
-    //TODO secret
 
-    secret: "shhhh, very secret",
-  })
-);
 
 app.get("/", (req, res) => {
   // TODO send to login
@@ -51,63 +62,45 @@ app.get("/logout", function (req, res) {
     })
 });
 
-function isAuthenticated(req, res, next) {
-  console.log("authenticate");
-  console.log("session authenticate", req.session.user);
 
-  if (req.session.user) next();
-  else res.send("Not logged in");
-}
-
-app.get("/lala", isAuthenticated, function (req, res) {
-  console.log("lalla");
-  res.send("hello");
+app.get("/lala", isAuthenticated, (req,res) => {
+    console.log("Entered lalala");
 });
 
-app.post("/login", function (req, res, next) {
+app.post("/login", express.urlencoded({ extended: false }), function (req, res) {
   //TODO test
   if (req.session.user) {
     res.redirect("/");
   }
-  console.log(req.body);
 
   const username = req.body.username;
   const password = req.body.password;
   console.table([username, password]);
-  db.get("SELECT username FROM form WHERE username=?", username, (err, row) => {
-    console.log("username", row);
-    if (!row) {
-      res.send("Error");
-    }
-
-    console.log("passed first");
-
-    result = db.get(
-      "SELECT username FROM form WHERE username=? AND password=?",
-      [username, password],
-      (err, row) => {
-        console.log("password", row);
-        console.log("passed second");
-
-        if (!row) {
-          res.send("Error");
-        }
-        req.session.regenerate(function () {
-          req.session.user = username;
-          console.log(req.session);
-        });
-        req.session.save();
-        res.status(200);
+  db.get("SELECT username, password FROM form WHERE username=? AND password=?", [username,password], (err, row) => {
+      if (!row) {
+        return res.status(401).send("Error username or password");
       }
-    );
-  });
+      req.session.user = username;
+
+      //req.session.regenerate(function (error) {
+      //  if(error) next(error);
+      //  req.session.user = username;
+      //  req.session.save(function (error) {
+      //      if (error) next(error);
+      //      console.log("saved");
+      //  });
+      //  console.log(req.session);
+      //});
+      return res.status(200).send();
+
+      });
 });
 
 app.get('/form', (req, res) => {
     // TODO test
     //
     if(req.session.user){
-        const username = req.body.username;
+        const username = req.session.user;
         db.get("SELECT * FROM form WHERE username=?", username, (err, rows) => {
             res.json({rows});
         });
