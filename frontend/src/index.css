@@ -1,13 +1,137 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.hidden {
+  display: none;
+}
+/*****************************************mainpage****************************************/
+#rocket-holder {
+}
+
+#rocket {
+}
+
+.rocket-grow {
+  transform: scale(1.5);
+}
+#pathsvg {
+  transform: scale(1.5);
+  color: "white";
+}
+
+#rocket-container {
+  /*transform: translate(20rem, -20rem);*/
+}
+
+/**************************Toggle button****************************/
+#toggle-container {
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#circle {
+  width: 1.5rem;
+  height: 1.5rem;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.22) 0px 1px 2px;
+}
+toggle-background::before {
+  width: 2.5rem;
+  height: 1.5rem;
+  top: 1.5rem;
+  background-color: aqua;
+  content: "";
+}
+toggle-background::after {
+  width: 2.5rem;
+  height: 1.5rem;
+}
+#toggle-background {
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: 2rem;
+  display: flex;
+  align-content: center;
+  padding: 0.25rem;
+}
+#day {
+  opacity: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 0.3rem;
+  border-radius: 50%;
+}
+#night {
+  opacity: 0;
+}
+
+#nightsvg {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 0.1rem;
+}
+
+.toggle-hide {
+  opacity: 0;
+}
+#cloud-container {
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  pointer-events: none;
+}
+.cloud {
+  width: 1.3rem;
+  height: 0.3rem;
+  background-color: rgb(253, 249, 249);
+}
+#cloud1 {
+  position: absolute;
+  top: 1.7rem;
+  right: 4rem;
+  z-index: 3;
+  border-radius: 50%;
+}
+#cloud2 {
+  position: absolute;
+  border-radius: 50%;
+  top: 0.7rem;
+  right: 3.8rem;
+  z-index: 3;
+}
+#cloud3 {
+  position: absolute;
+  border-radius: 50%;
+  top: 1rem;
+  right: 3.5rem;
+  z-index: 3;
+}
+#star3 {
+  position: absolute;
+  top: 1rem;
+
+  z-index: 0;
+  right: 3.5rem;
 }
