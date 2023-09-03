@@ -1,4 +1,6 @@
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
 export default function Logout() {
   function logout() {
     axios
@@ -6,5 +8,9 @@ export default function Logout() {
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
   }
-  return <button onClick={logout}>log out</button>;
+  return (
+    <Button variant="primary" className="btn-primary" onClick={logout}>
+      log out
+    </Button>
+  );
 }
