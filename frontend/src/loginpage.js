@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import Rocket from "./rocketlauncher.js";
 import ToggleButton from "./toggle";
-//import Words from "./words";
+import Words from "./words";
 
 const Loginpage = () => {
   const [username, setUsername] = useState("");
@@ -62,6 +62,7 @@ const Loginpage = () => {
       <h3 id="welcome" style={{ margin: "2rem", marginTop: "4rem" }}>
         Welcome to ....
       </h3>
+      <Words />
       <ToggleButton />
       <Box sx={{ display: "flex", flexWrap: "wrap" }}></Box>
       <div>
