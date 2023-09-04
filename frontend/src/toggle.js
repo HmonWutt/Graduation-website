@@ -4,9 +4,7 @@ import { night } from "./night";
 import { useState, useEffect } from "react";
 export default function ToggleButton() {
   function bringToFront(target, nontarget) {
-    console.log(target, nontarget);
     Array.from(target).map((x) => {
-      console.log("each", x);
       x.classList.add(".hidden");
     });
 
@@ -27,7 +25,7 @@ export default function ToggleButton() {
       document.getElementById("cloud-container"),
       document.getElementById("star-container"),
     ];
-    console.log(target);
+
     // target[0].style.opacity = 1;
     //  target[1].style.opacity = 0;
     circleLocation = ["flex-start", "flex-end"];
@@ -44,7 +42,6 @@ export default function ToggleButton() {
     circle.style.backgroundColor = circlecolors[0];
     console.log(target[0], target[1]);
     Array.from(target[0]).map((x) => {
-      console.log("each", x);
       x.style.opacity = 1;
     });
 
