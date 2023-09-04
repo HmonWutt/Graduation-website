@@ -7,7 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
-
+#root {
+  position: relative;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -134,4 +136,15 @@ toggle-background::after {
 
   z-index: 0;
   right: 3.5rem;
+}
+/*.letter {
+  position: absolute;
+} */
+#letters {
+  display: flex;
+  min-width: 20rem;
+  justify-content: space-between;
+}
+#letters * > {
+  flex: 1;
 }
