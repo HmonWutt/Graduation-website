@@ -3,30 +3,55 @@ import { motion } from "framer-motion";
 import { duration } from "@mui/material";
 
 const gsap = window.gsap;
+
 export default function Words() {
   const letters = ["W", "E", "L", "C", "O", "M", "E"];
+  const letterstring = "WELCOME";
+  const distancefrommiddle = [-100, -70, -40, -10, 20, 50, 80];
+  const original = [
+    { index: 0, letter: "W", spanid: "letterW" },
+    { index: 1, letter: "E", spanid: "letterE1" },
+    { index: 2, letter: "L", spanid: "letterL" },
+    { index: 3, letter: "C", spanid: "letterC" },
+    { index: 4, letter: "O", spanid: "letterO" },
+    { index: 5, letter: "M", spanid: "letterM" },
+    { index: 6, letter: "E", spanid: "letterE2" },
+  ];
   let taken = new Set();
+  const middleX = getMiddleX();
+  let scrambledlist = [];
+  let wrongposition = [];
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function getMiddleX() {
+    const viewportWidth =
+      window.innerWidth || document.documentElement.clientWidth;
+    const middleX = viewportWidth / 2;
+    return middleX;
+  }
+
   function randomgenerator() {
     while (taken.size < letters.length) {
       taken.add(Math.floor(Math.random() * letters.length));
     }
-
     return taken;
   }
-  let letterlist = [];
-  function makeletters() {
-    Array.from(taken).map((each, index) => {
-      letterlist.push({
-        letter: letters[each],
-        spanid: "letter" + index.toString(),
+
+  function scramble() {
+    Array.from(taken).forEach((each, index) => {
+      scrambledlist.push({
+        letter: original[each].letter,
+        spanid: original[each].spanid,
+        index: original[each].index,
       });
     });
 
     let newSpan;
-
-    letterlist.map((each, index) => {
+    scrambledlist.forEach((each, index) => {
       newSpan = document.createElement("h3");
-      newSpan.id = "letter" + index.toString();
+      newSpan.id = each.spanid;
       newSpan.textContent = each.letter;
       newSpan.className = "letter";
       document.getElementById("letters").appendChild(newSpan);
@@ -42,77 +67,77 @@ export default function Words() {
 
   function placeletters() {
     const letters = document.getElementsByClassName("letter");
-
-    Array.from(letters).map((letter, index) => {
-      gsap.from(
+    Array.from(letters).forEach((letter, index) => {
+      console.log(middleX + distancefrommiddle[index]);
+      gsap.fromTo(
         letter,
         {
-          x: -(Math.random() + index) * getRandomBinary().toString(),
-          y: -(Math.random() + index) * getRandomBinary().toString(),
+          left: -(Math.random() + index) * getRandomBinary().toString(),
+          top: -(Math.random() + index) * getRandomBinary().toString(),
           duration: 2,
           ease: "power1.in",
-        }
-        //{ x: x, y: 157.21875 }
+        },
+        { left: middleX + distancefrommiddle[index], top: 150 }
       );
     });
   }
-  let finalposition = [];
-  let coordinates = [];
-  Array.from(letters).map((letter, index) =>
-    finalposition.push({ letter, index })
-  );
-
-  useEffect(() => {
-    randomgenerator();
-    makeletters();
-    placeletters();
+  function findwrongposition() {
     let i = 0;
-    let wrongposition = [];
+    while (i < scrambledlist.length) {
+      if (original[i].letter !== scrambledlist[i].letter)
+        console.log(
+          "scrambled",
+          scrambledlist[i].letter,
+          "original",
+          original[i].letter,
+          original[i].index
+        );
+      wrongposition.push({
+        index: original[i].index,
 
-    while (i < finalposition.length) {
-      console.log("spanid", letterlist[i].spanid);
-      coordinates.push({
-        spanid: letterlist[i].spanid,
-        x: gsap.getProperty("#" + letterlist[i].spanid, "x"),
-        y: gsap.getProperty("#" + letterlist[i].spanid, "y"),
+        spanid: original[i].spanid,
       });
-      if (finalposition[i].letter !== letterlist[i].letter) {
-        wrongposition.push({
-          spanid: "#" + letterlist[i].spanid,
-          letter: finalposition[i].letter,
-        });
-      }
-
       i++;
     }
     console.log("wrong position", wrongposition);
-    setTimeout(() => {
-      Array.from(wrongposition).map((each) => {
-        gsap.getProperty("#id", "x");
-        gsap.to(each.spanid, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
-        //gsap.to("#" + each, 0.1, { y: "+=20", yoyo: true, repeat: 2 });
-      });
-    }, 3000);
+  }
+
+  useEffect(() => {
+    randomgenerator();
+
+    scramble();
+
+    placeletters();
+    findwrongposition();
 
     setTimeout(() => {
-      Array.from(wrongposition).map((each) => {
-        //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
-        gsap.to(each.spanid, 0.1, { y: "-20", yoyo: false, repeat: 0 });
+      Array.from(wrongposition).forEach((each) => {
+        gsap.getProperty("#id", "x");
+        gsap.to("#" + each.spanid, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
+        //gsap.to("#" + each, 0.1, { y: "+=20", yoyo: true, repeat: 2 });
       });
-    }, 4000);
+    }, 2500);
+
+    setTimeout(() => {
+      Array.from(wrongposition).forEach((each) => {
+        //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
+        gsap.to("#" + each.spanid, 0.1, { top: 130, yoyo: false, repeat: 0 });
+      });
+    }, 3000);
     ///////////////////////
-    console.log("coordinates", coordinates);
-    // setTimeout(() => {
-    //   let ii = 0;
-    //   while (ii < wrongposition.length) {
-    //     gsap.to(wrongposition[ii].spanid, {
-    //       x: 136 + coordinates[ii].x,
-    //       y: coordinates[ii].y,
-    //       duration: 0.5,
-    //     });
-    //     ii++;
-    //   }
-    // }, 4500);
+
+    setTimeout(() => {
+      Array.from(wrongposition).forEach((each, index) => {
+        console.log(middleX + distancefrommiddle[index]);
+        //sleep(500).then(() => {
+        gsap.to("#" + each.spanid, {
+          left: `${middleX + distancefrommiddle[index]}px`,
+          top: "150px",
+          duration: 1,
+          // });
+        });
+      });
+    }, 3500);
   }, []);
 
   return (
