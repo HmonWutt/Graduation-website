@@ -137,12 +137,13 @@ toggle-background::after {
   z-index: 0;
   right: 3.5rem;
 }
-/*.letter {
+.letter {
   position: absolute;
-} */
-#letters {
+  width: 30px;
+}
+letters {
   display: flex;
-  min-width: 20rem;
+  min-width: 30rem;
   justify-content: space-between;
 }
 #letters * > {
