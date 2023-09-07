@@ -65,39 +65,29 @@ app.get("/lala", isAuthenticated, function (req, res) {
 });
 
 app.post("/login", function (req, res, next) {
-  //TODO test
   if (req.session.user) {
     res.redirect("/");
   }
-  console.log(req.body);
 
   const username = req.body.username;
   const password = req.body.password;
   console.table([username, password]);
   db.get("SELECT username FROM form WHERE username=?", username, (err, row) => {
-    console.log("username", row);
     if (!row) {
       res.send("Error");
     }
-
-    console.log("passed first");
 
     result = db.get(
       "SELECT username FROM form WHERE username=? AND password=?",
       [username, password],
       (err, row) => {
-        console.log("password", row);
-        console.log("passed second");
 
         if (!row) {
           res.send("Error");
         }
-        req.session.regenerate(function () {
-          req.session.user = username;
-          console.log(req.session);
-        });
+        req.session.user = username;
         req.session.save();
-        res.status(200);
+        res.status(200).send("Session saved");
       }
     );
   });
