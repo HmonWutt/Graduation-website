@@ -52,9 +52,6 @@ app.get("/logout", function (req, res) {
 });
 
 function isAuthenticated(req, res, next) {
-  console.log("authenticate");
-  console.log("session authenticate", req.session.user);
-
   if (req.session.user) next();
   else res.send("Not logged in");
 }
@@ -93,16 +90,14 @@ app.post("/login", function (req, res, next) {
   });
 });
 
-app.get('/form', (req, res) => {
-    // TODO test
-    //
+app.get('/form', isAuthenticated, (req, res) => {
     if(req.session.user){
-        const username = req.body.username;
+        const username = req.session.user;
         db.get("SELECT * FROM form WHERE username=?", username, (err, rows) => {
             res.json({rows});
         });
     }
-    res.send(403)
+    res.status(403).send();
 })
 
 
