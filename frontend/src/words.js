@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { duration } from "@mui/material";
-
+import { useEffect } from "react";
 const gsap = window.gsap;
 
 export default function Words() {
