@@ -2,24 +2,29 @@ import { useEffect } from "react";
 const gsap = window.gsap;
 
 export default function Words() {
-  const letters = ["W", "E", "L", "C", "O", "M", "E"];
-  const letterstring = "WELCOME";
-  const distancefrommiddle = [-100, -70, -40, -10, 20, 50, 80];
-  const original = [
-    { index: 0, letter: "W", spanid: "letterW" },
-    { index: 1, letter: "E", spanid: "letterE1" },
-    { index: 2, letter: "L", spanid: "letterL" },
-    { index: 3, letter: "C", spanid: "letterC" },
-    { index: 4, letter: "O", spanid: "letterO" },
-    { index: 5, letter: "M", spanid: "letterM" },
-    { index: 6, letter: "E", spanid: "letterE2" },
-  ];
-  let taken = new Set();
+  const letterstring = "HMONCODED";
+  const original = createIdObject(letterstring);
+  const taken = randomGenerator(letterstring);
+  const scrambledList = scramble(taken, original);
+
   const middleX = getMiddleX();
-  let scrambledlist = [];
-  let wrongposition = [];
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+
+  const distanceFromMiddle = getDistance(letterstring, middleX);
+
+  function getMiddleIndex(string) {
+    return string.length / 2;
+  }
+
+  function getDistance(string, middleX) {
+    const middleIndex = getMiddleIndex(string);
+    const distanceArray = [];
+    let letterValue = middleIndex * -30 + 5;
+
+    for (let i = 0; i < string.length; i++) {
+      distanceArray.push(letterValue);
+      letterValue += 30;
+    }
+    return distanceArray;
   }
 
   function getMiddleX() {
@@ -29,24 +34,37 @@ export default function Words() {
     return middleX;
   }
 
-  function randomgenerator() {
-    while (taken.size < letters.length) {
-      taken.add(Math.floor(Math.random() * letters.length));
+  function randomGenerator(string) {
+    let taken = new Set();
+    while (taken.size < string.length) {
+      taken.add(Math.floor(Math.random() * string.length));
     }
     return taken;
   }
 
-  function scramble() {
+  function createIdObject(string) {
+    const original = [];
+    Array.from(string).forEach((i, index) =>
+      original.push({ index: index, letter: i, spanid: "letter" + i + index })
+    );
+    return original;
+  }
+
+  function scramble(taken, original) {
+    const scrambledList = [];
     Array.from(taken).forEach((each, index) => {
-      scrambledlist.push({
+      scrambledList.push({
         letter: original[each].letter,
         spanid: original[each].spanid,
         index: original[each].index,
       });
     });
+    return scrambledList;
+  }
 
+  function createSpans(scrambledList) {
     let newSpan;
-    scrambledlist.forEach((each, index) => {
+    scrambledList.forEach((each, index) => {
       newSpan = document.createElement("h3");
       newSpan.id = each.spanid;
       newSpan.textContent = each.letter;
@@ -62,10 +80,10 @@ export default function Words() {
     return plusorminus[result];
   }
 
-  function placeletters() {
+  function placeLetters(distanceFromMiddle) {
     const letters = document.getElementsByClassName("letter");
     Array.from(letters).forEach((letter, index) => {
-      console.log(middleX + distancefrommiddle[index]);
+      console.log(middleX + distanceFromMiddle[index]);
       gsap.fromTo(
         letter,
         {
@@ -74,13 +92,15 @@ export default function Words() {
           duration: 2,
           ease: "power1.in",
         },
-        { left: middleX + distancefrommiddle[index], top: 150 }
+        { left: middleX + distanceFromMiddle[index], top: 150 }
       );
     });
   }
-  function findwrongposition() {
+
+  function findWrongPosition(scrambledlist, original) {
     let i = 0;
-    while (i < scrambledlist.length) {
+    const wrongPosition = [];
+    while (i < scrambledList.length) {
       if (original[i].letter !== scrambledlist[i].letter)
         console.log(
           "scrambled",
@@ -89,49 +109,46 @@ export default function Words() {
           original[i].letter,
           original[i].index
         );
-      wrongposition.push({
+      wrongPosition.push({
         index: original[i].index,
 
         spanid: original[i].spanid,
       });
       i++;
     }
-    console.log("wrong position", wrongposition);
+    return wrongPosition;
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   useEffect(() => {
-    randomgenerator();
-
-    scramble();
-
-    placeletters();
-    findwrongposition();
+    createSpans(scrambledList);
+    placeLetters(distanceFromMiddle);
+    const wrongPosition = findWrongPosition(scrambledList, original);
 
     setTimeout(() => {
-      Array.from(wrongposition).forEach((each) => {
+      Array.from(wrongPosition).forEach((each) => {
         gsap.getProperty("#id", "x");
         gsap.to("#" + each.spanid, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
-        //gsap.to("#" + each, 0.1, { y: "+=20", yoyo: true, repeat: 2 });
       });
     }, 2500);
 
     setTimeout(() => {
-      Array.from(wrongposition).forEach((each) => {
-        //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
+      Array.from(wrongPosition).forEach((each) => {
+        // //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
         gsap.to("#" + each.spanid, 0.1, { top: 130, yoyo: false, repeat: 0 });
       });
     }, 3000);
     ///////////////////////
 
     setTimeout(() => {
-      Array.from(wrongposition).forEach((each, index) => {
-        console.log(middleX + distancefrommiddle[index]);
-        //sleep(500).then(() => {
+      Array.from(wrongPosition).forEach((each, index) => {
         gsap.to("#" + each.spanid, {
-          left: `${middleX + distancefrommiddle[index]}px`,
+          left: `${middleX + distanceFromMiddle[index]}px`,
           top: "150px",
           duration: 1,
-          // });
         });
       });
     }, 3500);
@@ -140,7 +157,6 @@ export default function Words() {
   return (
     <>
       <div id="letters"></div>
-      <button onClick={() => {}}>generate</button>
     </>
   );
 }
