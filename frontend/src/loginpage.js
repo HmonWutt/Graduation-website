@@ -17,7 +17,6 @@ import axios from "axios";
 const Loginpage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const fetchlala = (e) => {
     axios.get("/lala").then((data) => console.log(data));
