@@ -1,14 +1,14 @@
 import "./index.css";
 import { day } from "./day";
 import { night } from "./night";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 export default function ToggleButton() {
   function bringToFront(target, nontarget) {
-    Array.from(target).map((x) => {
+    Array.from(target).forEach((x) => {
       x.classList.add(".hidden");
     });
 
-    Array.from(nontarget).map((x) => {
+    Array.from(nontarget).forEach((x) => {
       x.style.zIndex = 5;
     });
   }
@@ -19,7 +19,6 @@ export default function ToggleButton() {
   let circleLocation;
   let backgroundcolors;
   let circlecolors;
-  let decoration;
   useEffect(() => {
     target = [
       document.getElementById("cloud-container"),
@@ -29,10 +28,10 @@ export default function ToggleButton() {
     // target[0].style.opacity = 1;
     //  target[1].style.opacity = 0;
     circleLocation = ["flex-start", "flex-end"];
-    decoration = [
-      document.getElementById("circle::before"),
-      document.getElementById("circle::after"),
-    ];
+      //const decoration = [
+      //  document.getElementById("circle::before"),
+      //  document.getElementById("circle::after"),
+      //];
     backgroundcolors = ["cornflowerblue", "rgb(31, 55, 99)"];
     circlecolors = ["yellow", "aliceblue"];
     background = document.getElementById("toggle-background");
@@ -41,11 +40,11 @@ export default function ToggleButton() {
     circle = document.getElementById("circle");
     circle.style.backgroundColor = circlecolors[0];
     console.log(target[0], target[1]);
-    Array.from(target[0]).map((x) => {
+    Array.from(target[0]).forEach((x) => {
       x.style.opacity = 1;
     });
 
-    Array.from(target[1]).map((x) => {
+    Array.from(target[1]).forEach((x) => {
       x.style.opacity = 0;
     });
   }, []);

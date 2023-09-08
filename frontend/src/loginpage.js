@@ -6,12 +6,9 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "@mui/material/Input";
 import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FormHelperText from "@mui/material/FormHelperText";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import Rocket from "./rocketlauncher.js";
@@ -40,16 +37,13 @@ const Loginpage = () => {
         password: password,
       })
       .then(function (response) {
-        {response.status == 200 && navigate("/mainpage/" + username)}
+        response.status === 200 && navigate("/mainpage/" + username)
       })
       .catch((err) => console.log(err));
-    return e.target.removeEventListener("click", submit);
   }
-  {
-    useEffect(() => {
-      axios.get("/testme").then((data) => console.log(data.result));
-    }, []);
-  }
+  useEffect(() => {
+    axios.get("/testme").then((data) => console.log(data.result));
+  }, []);
   return (
     <section
       style={{
@@ -75,7 +69,7 @@ const Loginpage = () => {
           type="text"
           placeholder="Username"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div>

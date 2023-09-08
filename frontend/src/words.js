@@ -1,30 +1,24 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { duration } from "@mui/material";
+import { useEffect } from "react";
 const gsap = window.gsap;
 export default function Words() {
-  const [show, setShow] = useState(null);
   const letters = ["W", "E", "L", "C", "O", "M", "E"];
   let taken = new Set();
   function randomgenerator() {
     console.log(origin);
     while (taken.size < letters.length) {
       taken.add(Math.floor(Math.random() * letters.length));
-      // }
     }
 
     return taken;
   }
   function makeletters() {
     let letterlist = [];
-    Array.from(taken).map((each) => {
-      console.log(each);
+    Array.from(taken).forEach((each) => {
       letterlist.push(letters[each]);
     });
-    console.log("letterlist", letterlist);
     let newSpan;
 
-    letterlist.map((each, index) => {
+    letterlist.forEach((each, index) => {
       newSpan = document.createElement("h3");
       newSpan.id = "letter" + index.toString();
       newSpan.textContent = each;
@@ -44,9 +38,7 @@ export default function Words() {
 
   function placeletters() {
     const letters = document.getElementsByClassName("letter");
-    console.log("letters", letters);
-    let x = 20;
-    Array.from(letters).map((letter, index) => {
+    Array.from(letters).forEach((letter, index) => {
       gsap.from(
         letter,
         {
@@ -70,7 +62,6 @@ export default function Words() {
       <div id="letters"></div>
       <button
         onClick={() => {
-          setShow(true);
           placeletters();
         }}
       >
