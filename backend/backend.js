@@ -15,36 +15,17 @@ app.use(
 );
 
 function isAuthenticated(req, res, next) {
-    console.log(req.session)
-  //console.log("authenticate");
-  //console.log("session ", req.session);
-
   if (req.session.user) next();
   else res.send("Not logged in");
 }
-
 app.use(express.urlencoded({ extended: true }));
-
-// TODO example can be viewed at https://github.com/expressjs/express/blob/master/examples/auth/index.js
-
 app.use(express.json());
-
-
-app.get("/", (req, res) => {
-  // TODO send to login
-  res.redirect("/login");
-});
 
 
 app.get("/testme", function (req, res) {
   db.all("SELECT * FROM form;", [], (err, rows) => {
     res.json({ rows });
   });
-});
-
-app.get("/login", function (req, res) {
-  //TODO
-  res.send("In loggin");
 });
 
 app.get("/logout", function (req, res) {
@@ -62,13 +43,17 @@ app.get("/logout", function (req, res) {
     })
 });
 
+function isAuthenticated(req, res, next) {
+  if (req.session.user) next();
+  else res.send("Not logged in");
+}
 
-app.get("/lala", isAuthenticated, (req,res) => {
-    console.log("Entered lalala");
+app.get("/lala", isAuthenticated, function (req, res) {
+  console.log("lalla");
+  res.send("hello");
 });
 
-app.post("/login", express.urlencoded({ extended: false }), function (req, res) {
-  //TODO test
+app.post("/login", function (req, res, next) {
   if (req.session.user) {
     res.redirect("/");
   }
@@ -81,77 +66,32 @@ app.post("/login", express.urlencoded({ extended: false }), function (req, res) 
         return res.status(401).send("Error username or password");
       }
       req.session.user = username;
-
-      //req.session.regenerate(function (error) {
-      //  if(error) next(error);
-      //  req.session.user = username;
-      //  req.session.save(function (error) {
-      //      if (error) next(error);
-      //      console.log("saved");
-      //  });
-      //  console.log(req.session);
-      //});
       return res.status(200).send();
-
       });
 });
 
-app.get('/form', (req, res) => {
-    // TODO test
-    //
-    if(req.session.user){
-        const username = req.session.user;
-        db.get("SELECT * FROM form WHERE username=?", username, (err, rows) => {
+app.get('/form', isAuthenticated, (req, res) => {
+    const username = req.session.user;
+    if(username){
+        db.get("SELECT attendance, allergy, plusone FROM form WHERE username=?;", username, (err, rows) => {
             res.json({rows});
         });
+        return;
     }
-    res.send(403)
-})
+    res.status(403).send();
+});
 
-
-app.put('/total', function (req, res) {
-    //TODO test the code 
-
-    if(req.session.user){
-        const total = req.body.oneplus;
-        const username = req.session.user;
-        db.run("UPDATE form SET plusone=? WHERE username=?", [total, username], (err, _) => {
-            if(!err) res.status(201);
-            else res.status(500);
-        });
-    }else{
-        res.redirect('/login')
-    }
-})
-
-app.put('/information', function (req, res) {
-    // TODO test
-    if(req.session.user){
-        const information = req.body.information;
-        const username = req.session.user;
-        db.run("UPDATE form SET allergy=? WHERE username=?", [information, username], (err, _) => {
-            if(!err) res.status(201);
-            else res.status(500);
-        });
-        res.status(201)
-    }else{
-        res.redirect('/login')
-    }
-})
-
-app.put('/attending', function (req, res) {
-    // TODO test
-    if(req.session.user){
-        const attending = req.body.attending;
-        const username = req.session.user;
-        db.run("UPDATE form SET attending=? WHERE username=?", [attending, username], (err, _) => {
-            if(!err) res.status(201);
-            else res.status(500);
-        });
-    }else{
-        res.redirect('/login')
-    }
-})
+app.post('/form', isAuthenticated, (req, res) => {
+    const username = req.session.user;
+    var {attendance, allergy, plusone} = req.body;
+    attendance = Number(attendance)
+    plusone = Number(plusone);
+    
+    console.log(attendance, allergy, plusone)
+    db.run("UPDATE form SET attendance=?, allergy=?, plusone=? WHERE username=?", [attendance, allergy, plusone, username], (err) => {
+        err ? res.status(500).send() : res.status(200).send();
+    });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom"
 import Logout from "./logout";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,8 +22,7 @@ const Loginpage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  console.log(username, password);
+  const navigate = useNavigate();
   const fetchlala = (e) => {
     axios.get("/lala").then((data) => console.log(data));
     return e.target.removeEventListener("click", fetchlala);
@@ -40,7 +40,7 @@ const Loginpage = () => {
         password: password,
       })
       .then(function (response) {
-        console.log(response);
+        {response.status == 200 && navigate("/mainpage/" + username)}
       })
       .catch((err) => console.log(err));
     return e.target.removeEventListener("click", submit);
