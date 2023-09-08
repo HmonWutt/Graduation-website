@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom"
-import Logout from "./logout";
 // import Button from "react-bootstrap/Button";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import Input from "@mui/material/Input";
@@ -65,7 +64,6 @@ const Loginpage = () => {
       />
       <button onClick={submit}>Submit</button>
       <button onClick={fetchlala}>Test</button>
-      <Logout />
     </section>
   );
 };

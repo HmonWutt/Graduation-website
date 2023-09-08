@@ -1,6 +1,11 @@
+import Logout from "./logout";
+
 const Header = () => {
     return(
-        <h1> This is a header </h1>
+        <div>
+            <h1> This is a header </h1>
+            <Logout/>
+        </div>
     );
 }
 
