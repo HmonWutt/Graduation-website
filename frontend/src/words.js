@@ -4,7 +4,7 @@ const gsap = window.gsap;
 
 export default function Words({ letterstring }) {
   letterstring = letterstring.toUpperCase();
-  const OFFSET = 20;
+  const OFFSET = 25;
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
@@ -77,7 +77,7 @@ export default function Words({ letterstring }) {
       newSpan.textContent = each.letter;
       newSpan.className = letterstring.trim();
       newSpan.style.position = "absolute";
-      newSpan.style.width = "20px";
+      newSpan.style.width = OFFSET + "px";
       document.getElementById(letterstring).appendChild(newSpan);
     });
   }
@@ -173,7 +173,7 @@ export default function Words({ letterstring }) {
 
   return (
     <>
-      <div id={letterstring} style={{ height: "50px" }}></div>
+      <div id={letterstring} style={{ height: 2 * OFFSET + "px" }}></div>
     </>
   );
 }
