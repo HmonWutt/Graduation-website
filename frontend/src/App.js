@@ -8,14 +8,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <Router>
-        <div className="App">
-          <Header/>
-          <Routes>
-              <Route path="/mainpage/:username" element={<Mainpage/>} />
-              <Route path="*" element={ <Loginpage /> } />
-          </Routes>
-          <Footer/>
-        </div>
+      <div id="App" className="App">
+        <Header />
+        <Routes>
+          <Route path="/mainpage/:username" element={<Mainpage />} />
+          <Route path="*" element={<Loginpage />} />
+        </Routes>
+        <Footer />
+      </div>
     </Router>
   );
 }
