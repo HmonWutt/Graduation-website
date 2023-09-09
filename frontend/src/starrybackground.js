@@ -14,8 +14,8 @@ export default function Starrify() {
   }
 
   useEffect(() => {
-    document.getElementById("star1").style.boxShadow = multipleBoxShadow(200);
-    document.getElementById("star2").style.boxShadow = multipleBoxShadow(1000);
+    document.getElementById("star1").style.boxShadow = multipleBoxShadow(100);
+    document.getElementById("star2").style.boxShadow = multipleBoxShadow(700);
     document.getElementById("star3").style.boxShadow = multipleBoxShadow(200);
   }, []);
 
@@ -23,8 +23,9 @@ export default function Starrify() {
     <>
       <span
         style={{
-          width: "2px",
-          height: "2px",
+          width: "3px",
+          height: "3px",
+          borderRadius: "50%",
           background: "transparent",
           zIndex: 0,
           position: "absolute",
@@ -50,8 +51,8 @@ export default function Starrify() {
       ></span>
       <span
         style={{
-          width: "1.5px",
-          height: "1.5px",
+          width: "2px",
+          height: "2px",
           background: "transparent",
           zIndex: 0,
           position: "absolute",
