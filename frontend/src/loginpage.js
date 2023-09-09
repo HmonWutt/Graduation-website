@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,6 +18,7 @@ const Loginpage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const rocket = useRef();
   const navigate = useNavigate();
   const fetchlala = (e) => {
     axios.get("/lala").then((data) => console.log(data));
@@ -36,7 +37,10 @@ const Loginpage = () => {
         password: password,
       })
       .then(function (response) {
-        response.status === 200 && navigate("/mainpage/" + username);
+        response.status === 200 &&
+          setTimeout(() => {
+            navigate("/mainpage/" + username);
+          }, 1000);
       })
       .catch((err) => console.log(err));
   }
@@ -45,6 +49,7 @@ const Loginpage = () => {
   }, []);
   return (
     <section
+      id="login"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -85,8 +90,15 @@ const Loginpage = () => {
           </InputAdornment>
         }
       />
-      <Rocket />
-      <Button onClick={submit}>Submit</Button>
+      <Rocket ref={rocket} />
+      <Button
+        onClick={() => {
+          submit();
+          rocket.current.launch();
+        }}
+      >
+        Submit
+      </Button>
       <Button onClick={fetchlala}>Test</Button>
     </section>
   );
