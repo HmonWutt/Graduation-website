@@ -56,18 +56,6 @@ const Mainpage = () => {
         }
       });
   };
-  useEffect(() => {
-    console.log(
-      document.getElementById("Welcome ".toUpperCase()).getBoundingClientRect()
-        .top
-    );
-    console.log(
-      document.getElementById(username.toUpperCase()).getBoundingClientRect()
-        .top
-    );
-    console.log("parent", document.getElementById("parent").clientTop);
-    console.log("child", document.getElementById("child").clientTop);
-  }, []);
 
   return (
     <section id="parent">
