@@ -1,93 +1,46 @@
 import "./index.css";
 import { day } from "./day";
 import { night } from "./night";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import Starrify from "./starrybackground";
+
 export default function ToggleButton() {
-  function bringToFront(target, nontarget) {
-    Array.from(target).forEach((x) => {
-      x.classList.add(".hidden");
-    });
-
-    Array.from(nontarget).forEach((x) => {
-      x.style.zIndex = 5;
-    });
-  }
-  let target;
-
-  let background;
-  let circle;
-  let circleLocation;
-  let backgroundcolors;
-  let circlecolors;
+  const [day, setDay] = useState(true);
   useEffect(() => {
-    target = [
-      document.getElementById("cloud-container"),
-      document.getElementById("star-container"),
-    ];
-
-    // target[0].style.opacity = 1;
-    //  target[1].style.opacity = 0;
-    circleLocation = ["flex-start", "flex-end"];
-      //const decoration = [
-      //  document.getElementById("circle::before"),
-      //  document.getElementById("circle::after"),
-      //];
-    backgroundcolors = ["cornflowerblue", "rgb(31, 55, 99)"];
-    circlecolors = ["yellow", "aliceblue"];
-    background = document.getElementById("toggle-background");
-    background.style.justifyContent = "flex-start";
-    background.style.backgroundColor = backgroundcolors[0];
-    circle = document.getElementById("circle");
-    circle.style.backgroundColor = circlecolors[0];
-    console.log(target[0], target[1]);
-    Array.from(target[0]).forEach((x) => {
-      x.style.opacity = 1;
-    });
-
-    Array.from(target[1]).forEach((x) => {
-      x.style.opacity = 0;
-    });
-  }, []);
-
-  function toggle() {
-    // console.log(target);
-    let popped = target.pop();
-    let poppedLocation = circleLocation.pop();
-    let poppedBackgroundColor = backgroundcolors.pop();
-    let poppedcirclecolor = circlecolors.pop();
-    console.log(poppedLocation);
-    bringToFront(popped, target[0]);
-
-    background.style.justifyContent = poppedLocation;
-    background.style.backgroundColor = poppedBackgroundColor;
-    circle.style.backgroundColor = poppedcirclecolor;
-
-    target = [popped, ...target];
-    console.log(popped, target);
-    circleLocation = [poppedLocation, ...circleLocation];
-    backgroundcolors = [poppedBackgroundColor, ...backgroundcolors];
-    circlecolors = [poppedcirclecolor, ...circlecolors];
-  }
-
+    document.getElementById("root").style.background = day
+      ? "radial-gradient(ellipse at bottom, #5ddefe 0%, aliceblue 100%)"
+      : "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)";
+    document.getElementById("App").style.color = day ? "black" : "aliceblue";
+    Array.from(document.getElementsByClassName("roundthing")).forEach(
+      (each) => {
+        each.style.backgroundColor = day ? "cornflowerblue" : "rgb(31, 55, 99)";
+        each.style.color = day ? "yellow" : "aliceblue";
+      }
+    );
+  });
   return (
     <>
       <div id="toggle-container">
-        <span id="day" className="">
-          {day}
+        <span
+          id="toggle-background"
+          className="roundthing"
+          style={{
+            backgroundColor: day ? "cornflowerblue" : "rgb(31, 55, 99)",
+            justifyContent: day ? "flex-start" : "flex-end",
+          }}
+          onClick={() => setDay(!day)}
+        >
+          <span
+            id="circle"
+            style={{
+              backgroundColor: day ? "yellow" : "aliceblue",
+            }}
+          ></span>
         </span>
-        <span id="toggle-background" onClick={toggle}>
-          <span id="circle"></span>
-        </span>
-        <span id="night" className=" ">
-          {night}
-        </span>{" "}
       </div>
-      <div id="cloud-container">
-        <span className="cloud" id="cloud1"></span>
-        <span className="cloud" id="cloud2"></span>
-        <span className="cloud" id="cloud3"></span>
-      </div>
+
       <div id="star-container"></div>
+      {!day && <Starrify />}
     </>
   );
 }
