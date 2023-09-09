@@ -2,9 +2,15 @@ import { useEffect } from "react";
 import "./index.css";
 const gsap = window.gsap;
 
-export default function Words({ letterstring }) {
+export default function Words({
+  letterstring,
+  OFFSET,
+  color,
+  shadow = ".1em .1em 0 hsl(200 50% 30%)",
+  fontFamily = "'Montserrat',sans-serif",
+}) {
   letterstring = letterstring.toUpperCase();
-  const OFFSET = 25;
+  //const OFFSET = 25;
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
@@ -72,12 +78,17 @@ export default function Words({ letterstring }) {
   function createSpans(scrambledList) {
     let newSpan;
     scrambledList.forEach((each, index) => {
-      newSpan = document.createElement("h3");
+      newSpan = document.createElement("span");
+
       newSpan.id = each.spanid;
       newSpan.textContent = each.letter;
       newSpan.className = letterstring.trim();
       newSpan.style.position = "absolute";
       newSpan.style.width = OFFSET + "px";
+      newSpan.style.fontSize = OFFSET * 0.95 + "px";
+      newSpan.style.color = color;
+      newSpan.style.fontFamily = fontFamily;
+
       document.getElementById(letterstring).appendChild(newSpan);
     });
   }
@@ -167,6 +178,9 @@ export default function Words({ letterstring }) {
           top: `${heightOfDiv}px`,
           duration: 1,
         });
+      });
+      Array.from(original).forEach((each) => {
+        document.getElementById(each.spanid).style.textShadow = shadow;
       });
     }, 3500);
   }, []);
