@@ -59,18 +59,20 @@ const Mainpage = () => {
 
   return (
     <section id="parent">
-      <div id="wordcontainer">
-        <Words
-          letterstring={"Welcome"}
-          OFFSET={25}
-          color="red"
-          fontFamily="Anton"
-          shadow="-16px 6px 15px #ced0d3"
-        />
+      {form && (
+        <div id="wordcontainer">
+          <Words
+            letterstring={"Welcome"}
+            OFFSET={25}
+            color="red"
+            fontFamily="Anton"
+            shadow="-16px 6px 15px #ced0d3"
+          />
 
-        <Words letterstring={username} OFFSET={30} color="black" />
-        <Words letterstring={"random"} OFFSET={10} color="blue" />
-      </div>
+          <Words letterstring={username} OFFSET={30} color="black" />
+          <Words letterstring={"random"} OFFSET={10} color="blue" />
+        </div>
+      )}
 
       <div id="child"> {isPending && <div> Loading... </div>} </div>
       <div id="formcontainer">
