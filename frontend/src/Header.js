@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import Button from "react-bootstrap/esm/Button";
 
 const Header = () => {
   function logout() {
@@ -10,13 +11,30 @@ const Header = () => {
   }
   return (
     <NavLink
+      id="nav"
       to="/"
       onClick={logout}
+      style={{
+        textDecoration: "none",
+        top: "2%",
+        left: "1%",
+        position: "absolute",
+        fontSize: "0.7rem",
+      }}
       className={({ isActive, isPending }) =>
         isPending ? "pending" : isActive ? "active" : ""
       }
     >
-      Log out
+      <span
+        className="roundthing"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Log out
+      </span>
     </NavLink>
   );
 };
