@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import "./index.css";
 const gsap = window.gsap;
 
-export default function Words({ letterstring, yposition }) {
+export default function Words({ letterstring }) {
+  letterstring = letterstring.toUpperCase();
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
@@ -46,7 +47,11 @@ export default function Words({ letterstring, yposition }) {
   function createIdObject(string) {
     const original = [];
     Array.from(string).forEach((i, index) =>
-      original.push({ index: index, letter: i, spanid: "letter" + index })
+      original.push({
+        index: index,
+        letter: i,
+        spanid: letterstring.trim().replace(" ", "-") + index,
+      })
     );
     return original;
   }
@@ -69,7 +74,9 @@ export default function Words({ letterstring, yposition }) {
       newSpan = document.createElement("h3");
       newSpan.id = each.spanid;
       newSpan.textContent = each.letter;
-      newSpan.className = "letter";
+      newSpan.className = letterstring.trim();
+      newSpan.style.position = "absolute";
+      newSpan.style.width = "20px";
       document.getElementById(letterstring).appendChild(newSpan);
     });
   }
@@ -82,7 +89,9 @@ export default function Words({ letterstring, yposition }) {
   }
 
   function placeLetters(distanceFromMiddle, heightOfDiv) {
-    const letters = document.getElementsByClassName("letter");
+    console.log("distance", distanceFromMiddle, heightOfDiv);
+    const letters = document.getElementsByClassName(letterstring.trim());
+    console.log(letters);
     Array.from(letters).forEach((letter, index) => {
       gsap.fromTo(
         letter,
@@ -92,12 +101,15 @@ export default function Words({ letterstring, yposition }) {
           duration: 2,
           ease: "power1.in",
         },
-        { left: middleX + distanceFromMiddle[index], top: heightOfDiv }
+        {
+          left: middleX + distanceFromMiddle[index],
+          top: heightOfDiv,
+        }
       );
     });
   }
 
-  function findWrongPosition(scrambledlist, original) {
+  function findWrongPosition(scrambledList, original) {
     let i = 0;
     const wrongPosition = [];
     while (i < scrambledList.length) {
@@ -119,7 +131,7 @@ export default function Words({ letterstring, yposition }) {
     const heightOfDiv = document
       .getElementById(letterstring)
       .getBoundingClientRect().top;
-    console.log(heightOfDiv);
+    console.log("height", heightOfDiv);
     createSpans(scrambledList);
     placeLetters(distanceFromMiddle, heightOfDiv);
     const wrongPosition = findWrongPosition(scrambledList, original);
@@ -156,7 +168,7 @@ export default function Words({ letterstring, yposition }) {
 
   return (
     <>
-      <div id={letterstring}></div>
+      <div id={letterstring} style={{ height: "30px" }}></div>
     </>
   );
 }
