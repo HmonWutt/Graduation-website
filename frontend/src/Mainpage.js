@@ -60,7 +60,7 @@ const Mainpage = () => {
   return (
     <section id="parent">
       <div id="wordcontainer">
-        <Words letterstring={"Welcome "} />
+        <Words letterstring={"Welcome"} />
 
         <Words letterstring={username} />
         <Words letterstring={"random"} />
@@ -70,7 +70,7 @@ const Mainpage = () => {
       <div id="formcontainer">
         {form && (
           <form id="form" onSubmit={submitChanges}>
-            <label>
+            <label id="additionalinformation">
               Additional information (such as allergies):
               <textarea value={allergy} onChange={allergyChange} />
             </label>
