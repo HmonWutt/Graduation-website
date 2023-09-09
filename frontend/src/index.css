@@ -16,11 +16,17 @@ code {
 .hidden {
   display: none;
 }
+/****************************************login************************************/
+#login {
+  margin-top: 5rem;
+}
 /*****************************************mainpage****************************************/
 #rocket-holder {
 }
 
 #rocket {
+  min-width: 5rem;
+  min-height: 5rem;
 }
 
 .rocket-grow {
@@ -37,15 +43,24 @@ code {
 
 /**************************Toggle button****************************/
 #toggle-container {
-  width: 10rem;
+  width: 3.5rem;
   height: 2.5rem;
   border-radius: 2rem;
   position: absolute;
-  top: 2rem;
-  right: 3rem;
+  top: 2%;
+  right: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+#cloud1 {
+  position: absolute;
+  top: 2%;
+  right: 1%;
+  z-index: 3;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
 }
 #circle {
   width: 1.5rem;
@@ -66,7 +81,7 @@ toggle-background::after {
   width: 2.5rem;
   height: 1.5rem;
 }
-#toggle-background {
+.roundthing {
   width: 3.5rem;
   height: 2rem;
   border-radius: 2rem;
@@ -99,22 +114,16 @@ toggle-background::after {
   height: 2.5rem;
   border-radius: 2rem;
   position: absolute;
-  top: 2rem;
-  right: 3rem;
+  top: 2%;
+  right: 1%;
   pointer-events: none;
 }
-.cloud {
+cloud {
   width: 1.3rem;
   height: 0.3rem;
   background-color: rgb(253, 249, 249);
 }
-#cloud1 {
-  position: absolute;
-  top: 1.7rem;
-  right: 4rem;
-  z-index: 3;
-  border-radius: 50%;
-}
+
 #cloud2 {
   position: absolute;
   border-radius: 50%;
@@ -145,6 +154,7 @@ toggle-background::after {
   align-items: center;
 }
 #wordcontainer {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -171,4 +181,22 @@ toggle-background::after {
 }
 #sidebar a.active {
   color: red;
+}
+
+#star1 {
+  animation: example 50s linear infinite;
+}
+#star2 {
+  animation: example 100s linear infinite;
+}
+#star3 {
+  animation: example 150s linear infinite;
+}
+@keyframes example {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
 }
