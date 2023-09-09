@@ -1,12 +1,12 @@
 import "./index.css";
 import { rocket } from "./rocket";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useImperativeHandle, forwardRef, useRef } from "react";
 const gsap = window.gsap;
 
 // Register the MotionPathPlugin
 
-function Rocket() {
+const Rocket = forwardRef((props, ref) => {
   const [hideRocket, setHideRocket] = useState(false);
   function launchrocket() {
     // target.classList.add("rocket-grow");
@@ -21,7 +21,11 @@ function Rocket() {
       y: -1000,
     });
   }
-
+  useImperativeHandle(ref, () => ({
+    launch() {
+      return launchrocket();
+    },
+  }));
   return (
     <div id="rocket-container">
       {" "}
@@ -39,8 +43,7 @@ function Rocket() {
       >
         {rocket}
       </motion.div>
-      <button onClick={launchrocket}>launch</button>{" "}
     </div>
   );
-}
+});
 export default Rocket;
