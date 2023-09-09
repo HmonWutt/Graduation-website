@@ -70,37 +70,40 @@ const Mainpage = () => {
   }, []);
 
   return (
-    <div id="parent">
+    <section id="parent">
       <div id="wordcontainer">
-        <Words letterstring={"Welcome ".toUpperCase()} />
+        <Words letterstring={"Welcome "} />
 
-        <Words letterstring={username.toUpperCase()} />
+        <Words letterstring={username} />
+        <Words letterstring={"random"} />
       </div>
 
       <div id="child"> {isPending && <div> Loading... </div>} </div>
-      {form && (
-        <form onSubmit={submitChanges}>
-          <label>
-            Additional information (such as allergies):
-            <textarea value={allergy} onChange={allergyChange} />
-          </label>
-          <select value={attendance} onChange={attendanceChange}>
-            <option value="Attending"> Attending </option>
-            <option value="Not Attending"> Not Attending </option>
-          </select>
+      <div id="formcontainer">
+        {form && (
+          <form id="form" onSubmit={submitChanges}>
+            <label>
+              Additional information (such as allergies):
+              <textarea value={allergy} onChange={allergyChange} />
+            </label>
+            <select value={attendance} onChange={attendanceChange}>
+              <option value="Attending"> Attending </option>
+              <option value="Not Attending"> Not Attending </option>
+            </select>
 
-          <select value={plusone} onChange={plusoneChange}>
-            {[...Array(10).keys()].map((number) => (
-              <option key={number} value={number}>
-                {" "}
-                +{number}{" "}
-              </option>
-            ))}
-          </select>
-          <input type="submit" value="Submit" />
-        </form>
-      )}
-    </div>
+            <select value={plusone} onChange={plusoneChange}>
+              {[...Array(10).keys()].map((number) => (
+                <option key={number} value={number}>
+                  {" "}
+                  +{number}{" "}
+                </option>
+              ))}
+            </select>
+            <input type="submit" value="Submit" />
+          </form>
+        )}
+      </div>
+    </section>
   );
 };
 
