@@ -4,6 +4,7 @@ const gsap = window.gsap;
 
 export default function Words({ letterstring }) {
   letterstring = letterstring.toUpperCase();
+  const OFFSET = 20;
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
@@ -19,7 +20,7 @@ export default function Words({ letterstring }) {
   function getDistance(string, middleX) {
     const middleIndex = getMiddleIndex(string);
     const distanceArray = [];
-    const OFFSET = 20;
+
     let letterValue = middleIndex * -OFFSET + 5;
 
     for (let i = 0; i < string.length; i++) {
@@ -89,9 +90,8 @@ export default function Words({ letterstring }) {
   }
 
   function placeLetters(distanceFromMiddle, heightOfDiv) {
-    console.log("distance", distanceFromMiddle, heightOfDiv);
     const letters = document.getElementsByClassName(letterstring.trim());
-    console.log(letters);
+
     Array.from(letters).forEach((letter, index) => {
       gsap.fromTo(
         letter,
@@ -113,11 +113,12 @@ export default function Words({ letterstring }) {
     let i = 0;
     const wrongPosition = [];
     while (i < scrambledList.length) {
-      wrongPosition.push({
-        index: original[i].index,
-
-        spanid: original[i].spanid,
-      });
+      if (scrambledList[i].spanid !== original[i].spanid)
+        wrongPosition.push({
+          index: original[i].index,
+          letter: original[i].letter,
+          spanid: original[i].spanid,
+        });
       i++;
     }
     return wrongPosition;
@@ -131,7 +132,7 @@ export default function Words({ letterstring }) {
     const heightOfDiv = document
       .getElementById(letterstring)
       .getBoundingClientRect().top;
-    console.log("height", heightOfDiv);
+
     createSpans(scrambledList);
     placeLetters(distanceFromMiddle, heightOfDiv);
     const wrongPosition = findWrongPosition(scrambledList, original);
@@ -139,7 +140,11 @@ export default function Words({ letterstring }) {
     setTimeout(() => {
       Array.from(wrongPosition).forEach((each) => {
         gsap.getProperty("#id", "x");
-        gsap.to("#" + each.spanid, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
+        gsap.to("#" + each.spanid, 0.1, {
+          y: "-=" + OFFSET,
+          yoyo: true,
+          repeat: 3,
+        });
       });
     }, 2500);
 
@@ -147,7 +152,7 @@ export default function Words({ letterstring }) {
       Array.from(wrongPosition).forEach((each) => {
         // //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
         gsap.to("#" + each.spanid, 0.1, {
-          top: heightOfDiv - 20,
+          top: heightOfDiv - OFFSET,
           yoyo: false,
           repeat: 0,
         });
@@ -156,9 +161,9 @@ export default function Words({ letterstring }) {
     ///////////////////////
 
     setTimeout(() => {
-      Array.from(wrongPosition).forEach((each, index) => {
+      Array.from(wrongPosition).forEach((each) => {
         gsap.to("#" + each.spanid, {
-          left: `${middleX + distanceFromMiddle[index]}px`,
+          left: `${middleX + distanceFromMiddle[each.index]}px`,
           top: `${heightOfDiv}px`,
           duration: 1,
         });
@@ -168,7 +173,7 @@ export default function Words({ letterstring }) {
 
   return (
     <>
-      <div id={letterstring} style={{ height: "30px" }}></div>
+      <div id={letterstring} style={{ height: "50px" }}></div>
     </>
   );
 }
