@@ -169,3 +169,6 @@ toggle-background::after {
   justify-content: center;
   align-items: center;
 }
+#sidebar a.active {
+  color: red;
+}
