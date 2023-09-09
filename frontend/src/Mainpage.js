@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./index.css";
 import axios from "axios";
 import Words from "./words";
+import ToggleButton from "./toggle";
 const Mainpage = () => {
   const { username } = useParams();
   const [isPending, setIsPending] = useState(true);
@@ -58,48 +59,55 @@ const Mainpage = () => {
   };
 
   return (
-    <section id="parent">
-      {form && (
-        <div id="wordcontainer">
-          <Words
-            letterstring={"Welcome"}
-            OFFSET={25}
-            color="red"
-            fontFamily="Anton"
-            shadow="-16px 6px 15px #ced0d3"
-          />
-
-          <Words letterstring={username} OFFSET={30} color="black" />
-          <Words letterstring={"random"} OFFSET={10} color="blue" />
-        </div>
-      )}
-
-      <div id="child"> {isPending && <div> Loading... </div>} </div>
-      <div id="formcontainer">
+    <>
+      <ToggleButton />
+      <section id="parent">
         {form && (
-          <form id="form" onSubmit={submitChanges}>
-            <label id="additionalinformation">
-              Additional information (such as allergies):
-              <textarea value={allergy} onChange={allergyChange} />
-            </label>
-            <select value={attendance} onChange={attendanceChange}>
-              <option value="Attending"> Attending </option>
-              <option value="Not Attending"> Not Attending </option>
-            </select>
+          <div id="wordcontainer">
+            <Words
+              letterstring={"Welcome"}
+              OFFSET={15}
+              color="blue"
+              fontFamily="Anton"
+            />
 
-            <select value={plusone} onChange={plusoneChange}>
-              {[...Array(10).keys()].map((number) => (
-                <option key={number} value={number}>
-                  {" "}
-                  +{number}{" "}
-                </option>
-              ))}
-            </select>
-            <input type="submit" value="Submit" />
-          </form>
+            <Words letterstring={username} OFFSET={20} color="black" />
+          </div>
         )}
-      </div>
-    </section>
+
+        <div id="child"> {isPending && <div> Loading... </div>} </div>
+        <div id="formcontainer">
+          {form && (
+            <form id="form" onSubmit={submitChanges}>
+              <label id="additionalinformation">
+                Additional information (such as allergies):
+                <textarea value={allergy} onChange={allergyChange} />
+              </label>
+              <select value={attendance} onChange={attendanceChange}>
+                <option value="Attending"> Attending </option>
+                <option value="Not Attending"> Not Attending </option>
+              </select>
+
+              <select value={plusone} onChange={plusoneChange}>
+                {[...Array(10).keys()].map((number) => (
+                  <option key={number} value={number}>
+                    {" "}
+                    +{number}{" "}
+                  </option>
+                ))}
+              </select>
+              <input type="submit" value="Submit" />
+            </form>
+          )}
+        </div>
+      </section>
+      <section id="info">
+        <div id="invite">You are cordially invited to my graduation party.</div>
+        <div id="date">Date</div>
+        <div id="time">Time</div>
+        <div id="place">Place</div>
+      </section>
+    </>
   );
 };
 
