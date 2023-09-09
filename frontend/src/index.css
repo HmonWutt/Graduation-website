@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
 }
 #root {
   position: relative;
@@ -137,15 +136,30 @@ toggle-background::after {
   z-index: 0;
   right: 3.5rem;
 }
-.letter {
-  position: absolute;
-  width: 30px;
-}
-letters {
+
+#parent {
   display: flex;
-  min-width: 30rem;
-  justify-content: space-between;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-#letters * > {
-  flex: 1;
+#wordcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#formcontainer {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
