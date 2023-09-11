@@ -38,10 +38,3 @@
     transform: rotate(360deg);
   }
 }
-
-#footer {
-  position: absolute;
-  top: 96%;
-  margin: auto;
-  width: 100%;
-}
