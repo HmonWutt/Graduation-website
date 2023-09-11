@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./index.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMap, faCalendarTimes, faClock} from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMap,
+  faCalendarTimes,
+  faClock,
+} from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import Words from "./words";
-import ToggleButton from "./toggle";
+
 const Mainpage = () => {
   const { username } = useParams();
   const [isPending, setIsPending] = useState(true);
@@ -62,29 +66,32 @@ const Mainpage = () => {
 
   return (
     <>
-      <ToggleButton />
       <section id="parent">
         {form && (
           <div id="wordcontainer">
-            <Words
-              letterstring={"Welcome"}
-              OFFSET={15}
-              color="blue"
-              fontFamily="Anton"
-            />
+            <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
 
-            <Words letterstring={username} OFFSET={20} color="black" />
+            <Words letterstring={username} OFFSET={25} color="#7e20cf" />
           </div>
         )}
-        {form && <section id="info">
-          <div id="invite">You are cordially invited to my graduation party:</div>
-          <ul>
-            <li id="date"><FontAwesomeIcon icon={faCalendarTimes} />:</li>
-            <li id="time"><FontAwesomeIcon icon={faClock} />: 15:00 onwards</li>
-            <li id="place"><FontAwesomeIcon icon={faMap} />: Amiralsgatan 43C</li>
-          
-          </ul>
-        </section>}
+        {form && (
+          <section id="info">
+            <div id="invite">
+              You are cordially invited to my graduation party:
+            </div>
+            <ul>
+              <li id="date">
+                <FontAwesomeIcon icon={faCalendarTimes} />:
+              </li>
+              <li id="time">
+                <FontAwesomeIcon icon={faClock} />: 15:00 onwards
+              </li>
+              <li id="place">
+                <FontAwesomeIcon icon={faMap} />: Amiralsgatan 43C
+              </li>
+            </ul>
+          </section>
+        )}
         <div id="child"> {isPending && <div> Loading... </div>} </div>
         <div id="formcontainer">
           {form && (
@@ -108,7 +115,7 @@ const Mainpage = () => {
                   ))}
                 </select>
               </div>
-            
+
               <label id="additionalinformation">
                 Additional information (such as allergies):
                 <textarea value={allergy} onChange={allergyChange} />
