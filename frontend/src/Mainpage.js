@@ -89,10 +89,13 @@ const Mainpage = () => {
         <div id="formcontainer">
           {form && (
             <form id="form" onSubmit={submitChanges}>
-              <select value={attendance} onChange={attendanceChange}>
-                <option value="Attending"> Attending </option>
-                <option value="Not Attending"> Not Attending </option>
-              </select>
+              <div>
+                Are you attending?&nbsp;
+                <select value={attendance} onChange={attendanceChange}>
+                  <option value="Attending"> Attending </option>
+                  <option value="Not Attending"> Not Attending </option>
+                </select>
+              </div>
 
               <div>
                 Sidekicks:&nbsp;
