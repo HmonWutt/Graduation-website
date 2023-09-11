@@ -11,14 +11,15 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // import Box from "@mui/material/Box";
 import axios from "axios";
 import Rocket from "./rocketlauncher.js";
-//import ToggleButton from "./toggle";
-//import Words from "./words";
+import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Loginpage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const rocket = useRef();
+  const usernameref = useRef();
+  const passwordref = useRef();
   const navigate = useNavigate();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,29 +44,30 @@ const Loginpage = () => {
   useEffect(() => {
     axios.get("/testme").then((data) => console.log(data.result));
   }, []);
+
   return (
-    <section
-      id="login"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "2rem",
-      }}
-    >
+    <section id="login">
+      <div style={{ marginTop: "5%" }} id="invite">
+        You are cordially invited to my graduation party. Please login to RSVP.
+      </div>
       <Input
+        ref={usernameref}
         sx={{ margin: "0" }}
+        style={{ marginTop: "3rem" }}
         size="small"
         id="username"
         variant="outlined"
         type="text"
+        className="input"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
 
       <Input
+        ref={passwordref}
         sx={{ margin: "0" }}
+        className="input "
         size="small"
         id="password"
         variant="outlined"
@@ -77,6 +79,7 @@ const Loginpage = () => {
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
+              style={{ color: "grey" }}
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
               edge="end"
@@ -88,6 +91,7 @@ const Loginpage = () => {
       />
       <Rocket ref={rocket} />
       <Button
+        id="submit"
         onClick={() => {
           submit();
           rocket.current.launch();
