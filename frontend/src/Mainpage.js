@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./index.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMap, faCalendarTimes, faClock} from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import Words from "./words";
 import ToggleButton from "./toggle";
@@ -74,38 +76,44 @@ const Mainpage = () => {
             <Words letterstring={username} OFFSET={20} color="black" />
           </div>
         )}
-
+        {form && <section id="info">
+          <div id="invite">You are cordially invited to my graduation party:</div>
+          <ul>
+            <li id="date"><FontAwesomeIcon icon={faCalendarTimes} />:</li>
+            <li id="time"><FontAwesomeIcon icon={faClock} />: 15:00 onwards</li>
+            <li id="place"><FontAwesomeIcon icon={faMap} />: Amiralsgatan 43C</li>
+          
+          </ul>
+        </section>}
         <div id="child"> {isPending && <div> Loading... </div>} </div>
         <div id="formcontainer">
           {form && (
             <form id="form" onSubmit={submitChanges}>
-              <label id="additionalinformation">
-                Additional information (such as allergies):
-                <textarea value={allergy} onChange={allergyChange} />
-              </label>
               <select value={attendance} onChange={attendanceChange}>
                 <option value="Attending"> Attending </option>
                 <option value="Not Attending"> Not Attending </option>
               </select>
 
-              <select value={plusone} onChange={plusoneChange}>
-                {[...Array(10).keys()].map((number) => (
-                  <option key={number} value={number}>
-                    {" "}
-                    +{number}{" "}
-                  </option>
-                ))}
-              </select>
+              <div>
+                Sidekicks:&nbsp;
+                <select value={plusone} onChange={plusoneChange}>
+                  {[...Array(10).keys()].map((number) => (
+                    <option key={number} value={number}>
+                      {" "}
+                      +{number}{" "}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            
+              <label id="additionalinformation">
+                Additional information (such as allergies):
+                <textarea value={allergy} onChange={allergyChange} />
+              </label>
               <input type="submit" value="Submit" />
             </form>
           )}
         </div>
-      </section>
-      <section id="info">
-        <div id="invite">You are cordially invited to my graduation party.</div>
-        <div id="date">Date</div>
-        <div id="time">Time</div>
-        <div id="place">Place</div>
       </section>
     </>
   );

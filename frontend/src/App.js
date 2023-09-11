@@ -1,4 +1,5 @@
 import "./App.css";
+import 'font-awesome/css/font-awesome.min.css';
 import Loginpage from "./loginpage";
 import Mainpage from "./Mainpage";
 import Footer from "./Footer";
