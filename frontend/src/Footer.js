@@ -1,11 +1,26 @@
+import "./App.css";
 const Footer = () => {
   return (
-    <h6 id="footer">
+    <span id="footer">
       {" "}
-      Collaboration between <a href="https://github.com/HmonWutt">
-        Hmon
-      </a> and <a href="https://github.com/jocketocke">Joakim</a> ❤️
-    </h6>
+      <i>
+        Collaboration between{" "}
+        <a
+          href="https://github.com/HmonWutt"
+          style={{ textDecoration: "none" }}
+        >
+          Hmon
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://github.com/jocketocke"
+          style={{ textDecoration: "none" }}
+        >
+          Joakim
+        </a>
+      </i>{" "}
+      ❤️
+    </span>
   );
 };
 
