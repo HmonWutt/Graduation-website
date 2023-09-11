@@ -1,24 +1,35 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif;*/
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 #root {
   position: relative;
+  height: 100%;
+  width: 100%;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  /*font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace; */
+  font-family: "Montserrat", sans-serif;
 }
 .hidden {
   display: none;
 }
 /****************************************login************************************/
 #login {
-  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  z-index: 2;
+}
+.input {
+  margin-top: 2rem;
 }
 /*****************************************mainpage****************************************/
 #rocket-holder {
@@ -199,4 +210,16 @@ cloud {
   to {
     transform: translateY(-2000px);
   }
+}
+#footer {
+  position: absolute;
+  top: 96%;
+  margin: auto;
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+}
+a {
+  text-decoration: none;
 }
