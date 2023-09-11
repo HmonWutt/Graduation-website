@@ -20,10 +20,6 @@ const Loginpage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const rocket = useRef();
   const navigate = useNavigate();
-  const fetchlala = (e) => {
-    axios.get("/lala").then((data) => console.log(data));
-    return e.target.removeEventListener("click", fetchlala);
-  };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -99,7 +95,6 @@ const Loginpage = () => {
       >
         Submit
       </Button>
-      <Button onClick={fetchlala}>Test</Button>
     </section>
   );
 };

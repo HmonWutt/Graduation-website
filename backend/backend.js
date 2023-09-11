@@ -48,11 +48,6 @@ function isAuthenticated(req, res, next) {
   else res.send("Not logged in");
 }
 
-app.get("/lala", isAuthenticated, function (req, res) {
-  console.log("lalla");
-  res.send("hello");
-});
-
 app.post("/login", function (req, res, next) {
   if (req.session.user) {
     res.redirect("/");
