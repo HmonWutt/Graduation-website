@@ -1,7 +1,7 @@
 import "./index.css";
 import { day } from "./day";
 import { night } from "./night";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import Starrify from "./starrybackground";
 
 export default function ToggleButton() {
@@ -10,7 +10,10 @@ export default function ToggleButton() {
     document.getElementById("root").style.background = day
       ? "radial-gradient(ellipse at bottom, #5ddefe 0%, aliceblue 100%)"
       : "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)";
-    document.getElementById("App").style.color = day ? "black" : "aliceblue";
+    document.getElementById("root").style.color = day ? "black" : "aliceblue";
+    Array.from(document.getElementsByClassName("input")).forEach(
+      (each) => (each.style.color = day ? "black" : "aliceblue")
+    );
     Array.from(document.getElementsByClassName("roundthing")).forEach(
       (each) => {
         each.style.backgroundColor = day ? "cornflowerblue" : "rgb(31, 55, 99)";
