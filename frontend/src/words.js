@@ -7,7 +7,7 @@ export default function Words({
   OFFSET,
   color,
   shadow = ".1em .1em 0 hsl(200 50% 30%)",
-  fontFamily = "'Montserrat',sans-serif",
+  fontFamily = "Montserrat,sans-serif",
 }) {
   letterstring = letterstring.toUpperCase();
   //const OFFSET = 25;
@@ -187,7 +187,14 @@ export default function Words({
 
   return (
     <>
-      <div id={letterstring} style={{ height: 2 * OFFSET + "px" }}></div>
+      <div
+        id={letterstring}
+        style={{
+          height: 2 * OFFSET + "px",
+          marginTop: "2rem",
+          fontWeight: "Bold",
+        }}
+      ></div>
     </>
   );
 }
