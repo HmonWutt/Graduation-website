@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Outlet, useOutletContext } from "react-router-dom";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,8 @@ import axios from "axios";
 import Words from "./words";
 
 const Mainpage = () => {
-  const { username } = useParams();
+  //const { username } = useParams();
+  const { username, loggedin } = useOutletContext();
   const [isPending, setIsPending] = useState(true);
   const [form, setForm] = useState(false);
   const [plusone, setPlusone] = useState(null);
@@ -71,7 +72,9 @@ const Mainpage = () => {
           <div id="wordcontainer">
             <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
 
-            <Words letterstring={username} OFFSET={25} color="#7e20cf" />
+            {username && (
+              <Words letterstring={username} OFFSET={25} color="#7e20cf" />
+            )}
           </div>
         )}
         {form && (
