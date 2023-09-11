@@ -7,6 +7,7 @@ const Footer = () => {
         Collaboration between{" "}
         <a
           href="https://github.com/HmonWutt"
+          target="_blank"
           style={{ textDecoration: "none" }}
         >
           Hmon
@@ -14,6 +15,7 @@ const Footer = () => {
         and{" "}
         <a
           href="https://github.com/jocketocke"
+          target="_blank"
           style={{ textDecoration: "none" }}
         >
           Joakim
