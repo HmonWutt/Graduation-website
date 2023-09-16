@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./index.css";
+import useScreenWidth from "./resizer";
 const gsap = window.gsap;
 
 export default function Words({
@@ -14,10 +15,8 @@ export default function Words({
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
-
-  const middleX = getMiddleX();
-
-  const distanceFromMiddle = getDistance(letterstring, middleX);
+  const viewportWidth = useScreenWidth();
+  const isInitialMount = useRef(true);
 
   function getMiddleIndex(string) {
     return string.length / 2;
@@ -36,9 +35,9 @@ export default function Words({
     return distanceArray;
   }
 
-  function getMiddleX() {
-    const viewportWidth =
-      window.innerWidth || document.documentElement.clientWidth;
+  function getMiddleX(viewportWidth) {
+    // const viewportWidth =
+    //   window.innerWidth || document.documentElement.clientWidth;
     const middleX = viewportWidth / 2;
     return middleX;
   }
@@ -84,8 +83,8 @@ export default function Words({
       newSpan.textContent = each.letter;
       newSpan.className = letterstring.trim();
       newSpan.style.position = "absolute";
-      newSpan.style.width = OFFSET + "px";
-      newSpan.style.fontSize = OFFSET * 0.95 + "px";
+      newSpan.style.width = OFFSET * 0.045 + "rem";
+      newSpan.style.fontSize = OFFSET * 0.05 + "rem";
       newSpan.style.color = color;
       newSpan.style.fontFamily = fontFamily;
 
@@ -100,7 +99,7 @@ export default function Words({
     return plusorminus[result];
   }
 
-  function placeLetters(distanceFromMiddle, heightOfDiv) {
+  function placeLetters(distanceFromMiddle, heightOfDiv, middleX) {
     const letters = document.getElementsByClassName(letterstring.trim());
 
     Array.from(letters).forEach((letter, index) => {
@@ -119,7 +118,15 @@ export default function Words({
       );
     });
   }
-
+  function resize(distanceFromMiddle, heightOfDiv, middleX) {
+    Array.from(original).forEach((letter, index) => {
+      console.log(letter);
+      gsap.to("#" + letter.spanid, {
+        left: middleX + distanceFromMiddle[index],
+        top: heightOfDiv,
+      });
+    });
+  }
   function findWrongPosition(scrambledList, original) {
     let i = 0;
     const wrongPosition = [];
@@ -140,50 +147,65 @@ export default function Words({
   }
 
   useEffect(() => {
-    const heightOfDiv = document
-      .getElementById(letterstring)
-      .getBoundingClientRect().top;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      const middleX = getMiddleX(viewportWidth);
 
-    createSpans(scrambledList);
-    placeLetters(distanceFromMiddle, heightOfDiv);
-    const wrongPosition = findWrongPosition(scrambledList, original);
+      const distanceFromMiddle = getDistance(letterstring, middleX);
+      const heightOfDiv = document
+        .getElementById(letterstring)
+        .getBoundingClientRect().top;
 
-    setTimeout(() => {
-      Array.from(wrongPosition).forEach((each) => {
-        gsap.getProperty("#id", "x");
-        gsap.to("#" + each.spanid, 0.1, {
-          y: "-=" + OFFSET,
-          yoyo: true,
-          repeat: 3,
+      createSpans(scrambledList);
+      placeLetters(distanceFromMiddle, heightOfDiv, middleX);
+      const wrongPosition = findWrongPosition(scrambledList, original);
+
+      setTimeout(() => {
+        Array.from(wrongPosition).forEach((each) => {
+          gsap.getProperty("#id", "x");
+          gsap.to("#" + each.spanid, 0.1, {
+            y: "-=" + OFFSET,
+            yoyo: true,
+            repeat: 3,
+          });
         });
-      });
-    }, 2500);
+      }, 2500);
 
-    setTimeout(() => {
-      Array.from(wrongPosition).forEach((each) => {
-        // //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
-        gsap.to("#" + each.spanid, 0.1, {
-          top: heightOfDiv - OFFSET,
-          yoyo: false,
-          repeat: 0,
+      setTimeout(() => {
+        Array.from(wrongPosition).forEach((each) => {
+          // //gsap.to("#" + each, 0.1, { y: "-=20", yoyo: true, repeat: 3 });
+          gsap.to("#" + each.spanid, 0.1, {
+            top: heightOfDiv - OFFSET,
+            yoyo: false,
+            repeat: 0,
+          });
         });
-      });
-    }, 3000);
-    ///////////////////////
+      }, 3000);
+      ///////////////////////
 
-    setTimeout(() => {
-      Array.from(wrongPosition).forEach((each) => {
-        gsap.to("#" + each.spanid, {
-          left: `${middleX + distanceFromMiddle[each.index]}px`,
-          top: `${heightOfDiv}px`,
-          duration: 1,
+      setTimeout(() => {
+        Array.from(wrongPosition).forEach((each) => {
+          gsap.to("#" + each.spanid, {
+            left: `${middleX + distanceFromMiddle[each.index]}px`,
+            top: `${heightOfDiv}px`,
+            duration: 1,
+          });
         });
-      });
-      Array.from(original).forEach((each) => {
-        document.getElementById(each.spanid).style.textShadow = shadow;
-      });
-    }, 3500);
-  }, []);
+        Array.from(original).forEach((each) => {
+          document.getElementById(each.spanid).style.textShadow = shadow;
+        });
+      }, 3500);
+    } else {
+      const middleX = getMiddleX(viewportWidth);
+
+      const distanceFromMiddle = getDistance(letterstring, middleX);
+      const heightOfDiv = document
+        .getElementById(letterstring)
+        .getBoundingClientRect().top;
+
+      resize(distanceFromMiddle, heightOfDiv, middleX);
+    }
+  });
 
   return (
     <>
