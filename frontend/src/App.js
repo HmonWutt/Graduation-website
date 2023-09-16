@@ -13,10 +13,12 @@ function App() {
         <Header />
         <Routes>
           {" "}
-          <Route path="/" element={<Loginpage />}>
+          {/* <Route path="/" element={<Loginpage />}>
             <Route index element={<Header />} />
             <Route path="/mainpage/:username" element={<Mainpage />} />
-          </Route>
+          </Route> */}
+          <Route path="/mainpage/:username" element={<Mainpage />} />
+          <Route path="*" element={<Loginpage />} />
         </Routes>
         <Footer />
       </div>
