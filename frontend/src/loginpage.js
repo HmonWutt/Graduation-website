@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useEffect, useRef, createContext } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "@mui/material/Input";
@@ -12,16 +12,14 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import Rocket from "./rocketlauncher.js";
 
-export const Context = createContext("");
 const Loginpage = () => {
-  const [username, setUsername] = useState("");
-
-  const [password, setPassword] = useState("");
   const [loggedin, setLoggedin] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const rocket = useRef();
-  const usernameref = useRef();
-  const passwordref = useRef();
+
   const navigate = useNavigate();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -39,11 +37,13 @@ const Loginpage = () => {
         response.status === 200 &&
           setTimeout(() => {
             setLoggedin(true);
+
             navigate("/mainpage/" + username);
           }, 1000);
       })
       .catch((err) => console.log(err));
   }
+  console.log("login", username);
   useEffect(() => {
     axios.get("/testme").then((data) => console.log(data.result));
   }, []);
@@ -57,7 +57,6 @@ const Loginpage = () => {
             RSVP.
           </div>
           <Input
-            ref={usernameref}
             sx={{ margin: "0" }}
             style={{ marginTop: "3rem" }}
             size="small"
@@ -71,7 +70,6 @@ const Loginpage = () => {
           />
 
           <Input
-            ref={passwordref}
             sx={{ margin: "0" }}
             className="input "
             size="small"
@@ -107,7 +105,6 @@ const Loginpage = () => {
           </Button>
         </section>
       )}
-      <Outlet context={(username, loggedin)} />
     </>
   );
 };
