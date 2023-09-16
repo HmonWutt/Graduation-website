@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, Outlet, useOutletContext } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import {
   faMap,
   faCalendarTimes,
@@ -12,24 +14,27 @@ import Words from "./words";
 
 const Mainpage = () => {
   //const { username } = useParams();
-  const { username, loggedin } = useOutletContext();
+
   const [isPending, setIsPending] = useState(true);
   const [form, setForm] = useState(false);
   const [plusone, setPlusone] = useState(null);
   const [allergy, setAllergy] = useState(null);
   const [attendance, setAttendance] = useState(null);
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     axios
       .get("/form")
       .then((data) => {
         setIsPending(false);
-        const { attendance, allergy, plusone } = data.data.rows;
+        const { attendance, allergy, plusone, username } = data.data.rows;
+
         const attendanceFormName =
           attendance === 1 ? "Attending" : "Not Attending";
         setAttendance(attendanceFormName);
         setAllergy(allergy);
         setPlusone(plusone);
+        setUsername(username);
         setForm(true);
       })
       .catch((error) => console.log(error));
@@ -40,10 +45,12 @@ const Mainpage = () => {
   };
 
   const attendanceChange = ({ target }) => {
+    console.log(target.value);
     setAttendance(target.value);
   };
 
   const allergyChange = ({ target }) => {
+    console.log(target.value);
     setAllergy(target.value);
   };
 
@@ -67,14 +74,12 @@ const Mainpage = () => {
 
   return (
     <>
-      <section id="parent">
+      <section id="mainpage">
         {form && (
           <div id="wordcontainer">
             <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
 
-            {username && (
-              <Words letterstring={username} OFFSET={25} color="#7e20cf" />
-            )}
+            <Words letterstring={username} OFFSET={25} color="#7e20cf" />
           </div>
         )}
         {form && (
@@ -82,49 +87,64 @@ const Mainpage = () => {
             <div id="invite">
               You are cordially invited to my graduation party:
             </div>
-            <ul>
-              <li id="date">
-                <FontAwesomeIcon icon={faCalendarTimes} />:
-              </li>
-              <li id="time">
-                <FontAwesomeIcon icon={faClock} />: 15:00 onwards
-              </li>
-              <li id="place">
-                <FontAwesomeIcon icon={faMap} />: Amiralsgatan 43C
-              </li>
-            </ul>
+            <div id="datetimeplace">
+              <ul>
+                <li id="date">
+                  <FontAwesomeIcon icon={faCalendarTimes} className="icon" />
+                </li>
+                <li id="time">
+                  <FontAwesomeIcon icon={faClock} className="icon" /> 15:00
+                  onwards
+                </li>
+                <li id="place">
+                  <FontAwesomeIcon icon={faMap} className="icon" />
+                  Amiralsgatan 43C
+                </li>
+              </ul>
+            </div>
           </section>
         )}
-        <div id="child"> {isPending && <div> Loading... </div>} </div>
+        <div id="child" style={{ display: isPending ? "block" : "none" }}>
+          {" "}
+          <div> Loading... </div>
+        </div>
         <div id="formcontainer">
           {form && (
-            <form id="form" onSubmit={submitChanges}>
+            <Form id="form" onSubmit={submitChanges}>
               <div>
                 Are you attending?&nbsp;
-                <select value={attendance} onChange={attendanceChange}>
-                  <option value="Attending"> Attending </option>
-                  <option value="Not Attending"> Not Attending </option>
-                </select>
+                <Form.Select value={attendance} onChange={attendanceChange}>
+                  <option value="Attending"> Yes </option>
+                  <option value="Not Attending"> No </option>
+                </Form.Select>
               </div>
 
               <div>
                 Sidekicks:&nbsp;
-                <select value={plusone} onChange={plusoneChange}>
+                <Form.Select value={plusone} onChange={plusoneChange}>
                   {[...Array(10).keys()].map((number) => (
                     <option key={number} value={number}>
                       {" "}
                       +{number}{" "}
                     </option>
                   ))}
-                </select>
+                </Form.Select>
               </div>
-
-              <label id="additionalinformation">
+              <Form.Label>
+                {" "}
                 Additional information (such as allergies):
-                <textarea value={allergy} onChange={allergyChange} />
-              </label>
-              <input type="submit" value="Submit" />
-            </form>
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                style={{ height: "100px" }}
+                value={allergy}
+                onChange={allergyChange}
+              />
+
+              <Button type="submit" value="Submit">
+                Submit
+              </Button>
+            </Form>
           )}
         </div>
       </section>
