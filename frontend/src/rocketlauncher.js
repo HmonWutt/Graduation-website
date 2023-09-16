@@ -16,7 +16,7 @@ const Rocket = forwardRef((props, ref) => {
     gsap.to(rocket, {
       duration: 3,
       scale: 3,
-      rotate: 60,
+      //rotate: 60,
       x: 1000,
       y: -1000,
     });
