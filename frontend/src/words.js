@@ -26,11 +26,11 @@ export default function Words({
     const middleIndex = getMiddleIndex(string);
     const distanceArray = [];
 
-    let letterValue = middleIndex * -OFFSET + 5;
+    let letterValue = middleIndex * -OFFSET * 0.8 + 5;
 
     for (let i = 0; i < string.length; i++) {
       distanceArray.push(letterValue);
-      letterValue += OFFSET;
+      letterValue += OFFSET * 0.8;
     }
     return distanceArray;
   }
@@ -83,8 +83,8 @@ export default function Words({
       newSpan.textContent = each.letter;
       newSpan.className = letterstring.trim();
       newSpan.style.position = "absolute";
-      newSpan.style.width = OFFSET * 0.045 + "rem";
-      newSpan.style.fontSize = OFFSET * 0.05 + "rem";
+      newSpan.style.width = OFFSET * 0.04 + "rem";
+      newSpan.style.fontSize = OFFSET * 0.045 + "rem";
       newSpan.style.color = color;
       newSpan.style.fontFamily = fontFamily;
 

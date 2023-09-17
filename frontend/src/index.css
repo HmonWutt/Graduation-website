@@ -160,9 +160,10 @@ cloud {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
+
   align-items: center;
 }
+
 #mainpage {
   display: flex;
   height: 80%;
