@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./index.css";
-import useScreenWidth from "./resizer";
+import useScreenSize from "./resizer";
 const gsap = window.gsap;
 
 export default function Words({
@@ -15,7 +15,7 @@ export default function Words({
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
-  const viewportWidth = useScreenWidth();
+  const viewportWidth = useScreenSize().screenWidth;
   const isInitialMount = useRef(true);
 
   function getMiddleIndex(string) {
@@ -213,7 +213,7 @@ export default function Words({
         id={letterstring}
         style={{
           height: 2 * OFFSET + "px",
-          marginTop: "2rem",
+          marginTop: "1rem",
           fontWeight: "Bold",
         }}
       ></div>

@@ -2,14 +2,24 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
 import ToggleButton from "./toggle";
+import useScreenSize from "./resizer";
+import { useEffect } from "react";
 
 const Header = () => {
+  const screenSize = useScreenSize();
   function logout() {
     axios
       .get("/logout")
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    const div = document.querySelector("#root");
+    if (screenSize.screenHeight < screenSize.screenWidth) {
+      alert("Please use portrait mode!");
+    }
+  }, [screenSize]);
   return (
     <>
       <NavLink

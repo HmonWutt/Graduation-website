@@ -11,6 +11,7 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 code {
   /*font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -157,21 +158,25 @@ cloud {
 }
 
 #wordcontainer {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  position: absolute;
 
-  align-items: center;
+  top: 0%;
 }
 
 #mainpage {
+  position: absolute;
+  top: 15vh;
+  left: 50%;
+  transform: translate(-50%);
   display: flex;
-  height: 80%;
+  height: 70%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  flex-shrink: 1;
 }
 
 #form {
@@ -272,4 +277,12 @@ li {
 }
 a {
   text-decoration: none;
+}
+@media (orientation: landscape) {
+  #mainpage {
+    display: none;
+  }
+  #footer {
+    top: 50%;
+  }
 }

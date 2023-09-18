@@ -74,14 +74,14 @@ const Mainpage = () => {
 
   return (
     <>
-      <section id="mainpage">
-        {form && (
-          <div id="wordcontainer">
-            <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
+      {form && (
+        <div id="wordcontainer">
+          <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
 
-            <Words letterstring={username} OFFSET={25} color="#7e20cf" />
-          </div>
-        )}
+          <Words letterstring={username} OFFSET={25} color="#7e20cf" />
+        </div>
+      )}
+      <section id="mainpage">
         {form && (
           <section id="info">
             <div id="invite">
