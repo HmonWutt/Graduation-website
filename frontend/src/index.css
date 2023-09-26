@@ -8,10 +8,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 #root {
-  position: relative;
   height: 100%;
   width: 100%;
   overflow: auto;
+}
+#App {
+  position: relative;
+  text-align: center;
+  top: 5%;
+  height: 100vh;
 }
 code {
   /*font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -162,21 +167,21 @@ cloud {
   display: flex;
   flex-direction: column;
   position: absolute;
-
   top: 0%;
 }
 
 #mainpage {
   position: absolute;
-  top: 15vh;
+  top: 10%;
   left: 50%;
   transform: translate(-50%);
   display: flex;
-  height: 70%;
+  min-height: 70%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 #form {
@@ -184,7 +189,7 @@ cloud {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-shrink: 1;
+  flex: 1;
   gap: 0.5rem;
 }
 #form > * {
@@ -278,7 +283,15 @@ li {
 a {
   text-decoration: none;
 }
-@media (orientation: landscape) {
+@media (max-height: 800px) {
+  #mainpage {
+    top: 25%;
+  }
+  #footer {
+    display: none;
+  }
+}
+@media /*only screen and(orientation: landscape) or*/ (max-height: 400px) {
   #mainpage {
     display: none;
   }
