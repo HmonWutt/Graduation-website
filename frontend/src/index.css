@@ -291,7 +291,7 @@ a {
     display: none;
   }
 }
-@media /*only screen and(orientation: landscape) or*/ (max-height: 400px) {
+@media /*only screen and(orientation: landscape) or*/ (max-height: 500px) {
   #mainpage {
     display: none;
   }
