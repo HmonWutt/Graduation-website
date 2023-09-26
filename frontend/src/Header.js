@@ -14,12 +14,16 @@ const Header = () => {
       .catch((err) => console.log(err));
   }
 
-  useEffect(() => {
-    const div = document.querySelector("#root");
-    if (screenSize.screenHeight < screenSize.screenWidth) {
-      alert("Please use portrait mode!");
-    }
-  }, [screenSize]);
+  // useEffect(() => {
+  //   console.log(screenSize.screenHeight);
+  //   const div = document.querySelector("#root");
+  //   if (
+  //     //screenSize.screenHeight < screenSize.screenWidth &&
+  //     screenSize.screenHeight < 600
+  //   ) {
+  //     alert("Please use portrait mode!");
+  //   }
+  // }, [screenSize]);
   return (
     <>
       <NavLink
