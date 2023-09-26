@@ -35,6 +35,7 @@ const Loginpage = () => {
       })
       .then(function (response) {
         response.status === 200 &&
+          rocket.current.launch();
           setTimeout(() => {
             setLoggedin(true);
 
@@ -101,7 +102,6 @@ const Loginpage = () => {
             id="submit"
             onClick={() => {
               submit();
-              rocket.current.launch();
             }}
           >
             Submit
