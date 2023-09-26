@@ -5,7 +5,7 @@ import { useState, useEffect, useContext, createContext } from "react";
 import Starrify from "./starrybackground";
 
 export default function ToggleButton() {
-  const [day, setDay] = useState(true);
+  const [day, setDay] = useState(false);
   useEffect(() => {
     document.getElementById("root").style.background = day
       ? "radial-gradient(ellipse at bottom, #5ddefe 0%, aliceblue 100%)"
