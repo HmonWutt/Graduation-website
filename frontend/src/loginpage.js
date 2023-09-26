@@ -41,11 +41,14 @@ const Loginpage = () => {
             navigate("/mainpage/" + username);
           }, 1000);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("Could not login, please try again."));
   }
-  console.log("login", username);
   useEffect(() => {
-    axios.get("/testme").then((data) => console.log(data.result));
+    axios.get("/testme").then((data) => {
+        const {username, password} = data.data.rows[0];
+        setUsername(username);
+        setPassword(password);
+        console.log(data.result)});
   }, []);
 
   return (
