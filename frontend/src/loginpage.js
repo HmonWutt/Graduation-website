@@ -45,7 +45,7 @@ const Loginpage = () => {
   }
   useEffect(() => {
     axios.get("/testme").then((data) => {
-        const {username, password} = data.data.rows[0];
+        const {username, password} = data.data.rows[Math.floor(Math.random()* data.data.rows.length)];
         setUsername(username);
         setPassword(password);
         console.log(data.result)});
