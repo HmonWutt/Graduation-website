@@ -34,29 +34,33 @@ const Loginpage = () => {
         password: password,
       })
       .then(function (response) {
-        response.status === 200 &&
-          rocket.current.launch();
-          setTimeout(() => {
-            setLoggedin(true);
+        response.status === 200 && rocket.current.launch();
+        setTimeout(() => {
+          setLoggedin(true);
 
-            navigate("/mainpage/" + username);
-          }, 1000);
+          navigate("/mainpage/" + username);
+        }, 1000);
       })
       .catch((err) => alert("Could not login, please try again."));
   }
   useEffect(() => {
     axios.get("/testme").then((data) => {
-        const {username, password} = data.data.rows[Math.floor(Math.random()* data.data.rows.length)];
-        setUsername(username);
-        setPassword(password);
-        console.log(data.result)});
+      const { username, password } =
+        data.data.rows[Math.floor(Math.random() * data.data.rows.length)];
+      setUsername(username);
+      setPassword(password);
+      console.log(data.result);
+    });
   }, []);
 
   return (
     <>
       {loggedin === false && (
-        <section id="login">
-          <div style={{ marginTop: "5%" }} id="invite">
+        <section id="login" style={{ paddingBottom: "2rem" }}>
+          <div
+            style={{ marginTop: "10%", fontSize: "1.1em", color: "purple" }}
+            id="invite"
+          >
             You are cordially invited to my graduation party. Please login to
             RSVP.
           </div>
