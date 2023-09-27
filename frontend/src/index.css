@@ -10,7 +10,7 @@ body {
 #root {
   height: 100%;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 #App {
   position: relative;
@@ -172,7 +172,7 @@ cloud {
 
 #mainpage {
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%);
   display: flex;
@@ -181,7 +181,6 @@ cloud {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding-bottom: 2.5rem;
 }
 
 #form {
@@ -272,13 +271,13 @@ li {
   }
 }
 #footer {
-  top: 96vh;
+  top: 96%;
   margin: auto;
   width: 100%;
   height: 1rem;
   display: flex;
   justify-content: center;
-
+  /* padding-bottom: 1rem; */
   position: fixed;
 }
 a {
@@ -295,6 +294,6 @@ a {
     display: none;
   }
   #footer {
-    top: 55%;
+    top: 92%;
   }
 }
