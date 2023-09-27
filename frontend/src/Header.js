@@ -14,16 +14,6 @@ const Header = () => {
       .catch((err) => console.log(err));
   }
 
-  // useEffect(() => {
-  //   console.log(screenSize.screenHeight);
-  //   const div = document.querySelector("#root");
-  //   if (
-  //     //screenSize.screenHeight < screenSize.screenWidth &&
-  //     screenSize.screenHeight < 600
-  //   ) {
-  //     alert("Please use portrait mode!");
-  //   }
-  // }, [screenSize]);
   return (
     <>
       <NavLink
