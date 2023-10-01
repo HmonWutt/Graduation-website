@@ -12,6 +12,7 @@ export default function Words({
 }) {
   letterstring = letterstring.toUpperCase();
   //const OFFSET = 25;
+
   const original = createIdObject(letterstring);
   const taken = randomGenerator(letterstring);
   const scrambledList = scramble(taken, original);
@@ -56,7 +57,7 @@ export default function Words({
       original.push({
         index: index,
         letter: i,
-        spanid: letterstring.trim().replace(" ", "-") + index,
+        spanid: letterstring.trim().replaceAll(" ", "-") + index,
       })
     );
     return original;
