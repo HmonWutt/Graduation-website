@@ -170,7 +170,7 @@ export default function Words({
             repeat: 3,
           });
         });
-      }, 2500);
+      }, 1000);
 
       setTimeout(() => {
         Array.from(wrongPosition).forEach((each) => {
@@ -181,7 +181,7 @@ export default function Words({
             repeat: 0,
           });
         });
-      }, 3000);
+      }, 1500);
       ///////////////////////
 
       setTimeout(() => {
@@ -195,7 +195,7 @@ export default function Words({
         Array.from(original).forEach((each) => {
           document.getElementById(each.spanid).style.textShadow = shadow;
         });
-      }, 3500);
+      }, 2500);
     } else {
       const middleX = getMiddleX(viewportWidth);
 
