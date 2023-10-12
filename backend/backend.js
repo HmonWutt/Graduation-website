@@ -1,6 +1,10 @@
 const express = require("express");
+
 const app = express();
-const port = 3000;
+var cors = require("cors");
+
+app.use(cors());
+const port = 5000;
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("form.sql");
 var session = require("express-session");
@@ -63,6 +67,7 @@ app.post("/login", function (req, res, next) {
         return res.status(401).send("Error username or password");
       }
       req.session.user = username;
+
       return res.status(200).send();
     }
   );
@@ -70,6 +75,7 @@ app.post("/login", function (req, res, next) {
 
 app.get("/form", isAuthenticated, (req, res) => {
   const username = req.session.user;
+
   if (username) {
     db.get(
       "SELECT attendance, allergy, plusone,username FROM form WHERE username=?;",
@@ -85,11 +91,11 @@ app.get("/form", isAuthenticated, (req, res) => {
 
 app.post("/form", isAuthenticated, (req, res) => {
   const username = req.session.user;
+
   var { attendance, allergy, plusone } = req.body;
   attendance = Number(attendance);
   plusone = Number(plusone);
 
-  console.log(attendance, allergy, plusone);
   db.run(
     "UPDATE form SET attendance=?, allergy=?, plusone=? WHERE username=?",
     [attendance, allergy, plusone, username],
