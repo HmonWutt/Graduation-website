@@ -85,7 +85,16 @@ code {
   z-index: 1;
   border-radius: 50%;
   pointer-events: none;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.22) 0px 1px 2px;
+
+  display: flex;
+  justify-content: center;
+  font-size: 1.3em;
+  align-items: center;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 toggle-background::before {
   width: 2.5rem;
@@ -103,7 +112,8 @@ toggle-background::after {
   height: 2rem;
   border-radius: 2rem;
   display: flex;
-  align-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 0.25rem;
 }
 #day {
@@ -172,7 +182,7 @@ cloud {
 
 #mainpage {
   position: absolute;
-  top: 15%;
+  top: 13%;
   left: 50%;
   transform: translate(-50%);
   display: flex;
@@ -211,8 +221,7 @@ cloud {
   align-items: center;
   justify-content: center;
 }
-#invite {
-}
+
 #info {
   display: flex;
   flex-direction: column;
@@ -283,17 +292,31 @@ li {
 a {
   text-decoration: none;
 }
-@media (max-height: 800px) and (min-height: 500px) {
-  #mainpage {
-    top: 25%;
-  }
-}
 
-@media /*only screen and(orientation: landscape) or*/ (max-height: 500px) {
+/* @media (max-height: 800px) and (min-height: 500px) {
+   #mainpage {
+    top: 20%;
+  } 
+} */
+#invite {
+  margin-top: 10%;
+}
+@media /*only screen and(orientation: landscape) or*/ (max-height: 700px) {
   #mainpage {
     display: none;
   }
   #footer {
     top: 92%;
+  }
+}
+@media (orientation: portrait) {
+  #invite {
+    margin-top: 25%;
+  }
+}
+
+@media (min-width: 600px) {
+  .invite {
+    font-size: 1.2em;
   }
 }
