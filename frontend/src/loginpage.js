@@ -11,6 +11,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // import Box from "@mui/material/Box";
 import axios from "axios";
 import Rocket from "./rocketlauncher.js";
+import "./index.css";
 
 const Loginpage = () => {
   const [loggedin, setLoggedin] = useState(false);
@@ -43,26 +44,37 @@ const Loginpage = () => {
       })
       .catch((err) => alert("Could not login, please try again."));
   }
-  useEffect(() => {
-    axios.get("/testme").then((data) => {
-      const { username, password } =
-        data.data.rows[Math.floor(Math.random() * data.data.rows.length)];
-      setUsername(username);
-      setPassword(password);
-      console.log(data.result);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/testme").then((data) => {
+  //     const { username, password } =
+  //       data.data.rows[Math.floor(Math.random() * data.data.rows.length)];
+  //     setUsername(username);
+  //     setPassword(password);
+  //     console.log(username, password);
+  //   });
+  // }, []);
 
   return (
     <>
       {loggedin === false && (
         <section id="login" style={{ paddingBottom: "2rem" }}>
           <div
-            style={{ marginTop: "10%", fontSize: "1.1em", color: "purple" }}
             id="invite"
+            className="invite"
+            style={{
+              color: "purple",
+            }}
           >
-            You are cordially invited to my graduation party. Please login to
-            RSVP.
+            You are cordially invited to my graduation party.
+          </div>
+          <div
+            className="invite"
+            style={{
+              color: "purple",
+            }}
+          >
+            {" "}
+            Please login to RSVP.
           </div>
           <Input
             sx={{ margin: "0" }}
@@ -104,11 +116,12 @@ const Loginpage = () => {
           <Rocket ref={rocket} />
           <Button
             id="submit"
+            variant="warning"
             onClick={() => {
               submit();
             }}
           >
-            Submit
+            Log in
           </Button>
         </section>
       )}
