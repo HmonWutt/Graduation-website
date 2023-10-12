@@ -45,12 +45,10 @@ const Mainpage = () => {
   };
 
   const attendanceChange = ({ target }) => {
-    console.log(target.value);
     setAttendance(target.value);
   };
 
   const allergyChange = ({ target }) => {
-    console.log(target.value);
     setAllergy(target.value);
   };
 
@@ -58,16 +56,16 @@ const Mainpage = () => {
     event.preventDefault();
     const SQLAttendance = attendance.includes("Not") ? 0 : 1;
     axios
-      .post("/form", {
+      .post(`/form`, {
         attendance: SQLAttendance,
         allergy: allergy,
         plusone: plusone,
       })
       .then((response) => {
         if (response.status === 200) {
-          alert("Successfully sent data");
+          alert("Your information has been saved successfully!");
         } else {
-          alert("Error, data not sent");
+          alert("Error, please try again!");
         }
       });
   };
@@ -76,7 +74,7 @@ const Mainpage = () => {
     <>
       {form && (
         <div id="wordcontainer">
-          <Words letterstring={"Welcome"} OFFSET={20} color="#40fd02" />
+          <Words letterstring={"Welcome"} OFFSET={20} color="#02fdf5" />
 
           <Words letterstring={username} OFFSET={25} color="#7e20cf" />
         </div>
@@ -112,7 +110,7 @@ const Mainpage = () => {
           {form && (
             <Form id="form" onSubmit={submitChanges}>
               <div>
-                Are you attending?&nbsp;
+                Are you coming?&nbsp;
                 <Form.Select value={attendance} onChange={attendanceChange}>
                   <option value="Attending"> Yes </option>
                   <option value="Not Attending"> No </option>
