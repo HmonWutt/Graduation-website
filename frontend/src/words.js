@@ -121,7 +121,6 @@ export default function Words({
   }
   function resize(distanceFromMiddle, heightOfDiv, middleX) {
     Array.from(original).forEach((letter, index) => {
-      console.log(letter);
       gsap.to("#" + letter.spanid, {
         left: middleX + distanceFromMiddle[index],
         top: heightOfDiv,
