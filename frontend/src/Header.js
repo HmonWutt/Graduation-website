@@ -2,15 +2,14 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
 import ToggleButton from "./toggle";
-import useScreenSize from "./resizer";
-import { useEffect } from "react";
 
 const Header = () => {
-  const screenSize = useScreenSize();
   function logout() {
     axios
       .get("/logout")
-      .then((response) => console.log(response))
+      .then(() => {
+        window.location.reload();
+      })
       .catch((err) => console.log(err));
   }
 
@@ -37,6 +36,7 @@ const Header = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            filter: " drop-shadow(0px 0px 2px #ffffff)",
           }}
         >
           Log out
