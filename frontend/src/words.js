@@ -213,7 +213,7 @@ export default function Words({
         id={letterstring}
         style={{
           height: 2 * OFFSET + "px",
-          marginTop: "1rem",
+          marginTop: "0.5rem",
           fontWeight: "Bold",
         }}
       ></div>

@@ -173,7 +173,7 @@ cloud {
 }
 
 #wordcontainer {
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -293,15 +293,15 @@ a {
   text-decoration: none;
 }
 
-/* @media (max-height: 800px) and (min-height: 500px) {
-   #mainpage {
+@media (max-height: 600px) and (min-height: 500px) {
+  #mainpage {
     top: 20%;
-  } 
-} */
+  }
+}
 #invite {
   margin-top: 10%;
 }
-@media /*only screen and(orientation: landscape) or*/ (max-height: 700px) {
+@media /*only screen and(orientation: landscape) or*/ (max-height: 500px) {
   #mainpage {
     display: none;
   }
@@ -315,8 +315,8 @@ a {
   }
 }
 
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
   .invite {
     font-size: 1.2em;
   }
-}
+} */

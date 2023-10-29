@@ -24,7 +24,7 @@ const Mainpage = () => {
 
   useEffect(() => {
     axios
-      .get("/form")
+      .get("http://humma.se/backend/form")
       .then((data) => {
         setIsPending(false);
         const { attendance, allergy, plusone, username } = data.data.rows;
@@ -56,7 +56,7 @@ const Mainpage = () => {
     event.preventDefault();
     const SQLAttendance = attendance.includes("Not") ? 0 : 1;
     axios
-      .post(`/form`, {
+      .post("http://humma.se/backend/form", {
         attendance: SQLAttendance,
         allergy: allergy,
         plusone: plusone,

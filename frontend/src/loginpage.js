@@ -30,7 +30,7 @@ const Loginpage = () => {
   };
   function submit(e) {
     axios
-      .post("/login", {
+      .post("http://humma.se/backend/login", {
         username: username,
         password: password,
       })
